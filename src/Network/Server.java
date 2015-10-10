@@ -32,25 +32,19 @@ public class Server {
 
 /*
                 int res = inputStream.read();
-                String receive = "Recu de " + client.getInetAddress() + " : \"";
+                String receiveMessage = "Recu de " + client.getInetAddress() + " : \"";
 
                 while(res > 0 && res <= 255){
-                    receive += (char) res;
+                    receiveMessage += (char) res;
                     res = inputStream.read();
                 }
 
-                receive += "\"";
-                System.out.println(receive);
+                receiveMessage += "\"";
+                System.out.println(receiveMessage);
 */
 
 
-                outputStream.write((int) '1');
-                outputStream.write((int) '1');
-                outputStream.write((int) '+');
-                outputStream.write((int) '2');
-                outputStream.write((int) '2');
-                outputStream.write((int) 'F');
-
+                outputStream.write((int) 'P');
 
                 client.close();
             }
