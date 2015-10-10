@@ -1,0 +1,6 @@
+nom=MAHEO
+prenom=Maxime
+groupe=S3A
+courriel=maxime.maheo@etu.u-bordeaux.fr
+compte=mmaheo
+application=
