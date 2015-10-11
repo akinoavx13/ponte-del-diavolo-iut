@@ -36,34 +36,40 @@ public class Random extends Algorithm {
 
     @Override
     public void searchBest2Cells() {
-        int x1 = (int) (Math.random() * tray.getDimension());
-        int y1 = (int) (Math.random() * tray.getDimension());
-        int x2 = (int) (Math.random() * tray.getDimension());
-        int y2 = (int) (Math.random() * tray.getDimension());
+        if (canISet2Cells()) {
+            int x1 = (int) (Math.random() * tray.getDimension());
+            int y1 = (int) (Math.random() * tray.getDimension());
+            int x2 = (int) (Math.random() * tray.getDimension());
+            int y2 = (int) (Math.random() * tray.getDimension());
 
-        while (!tray.isFree(x1, y1)) {
-            x1 = (int) (Math.random() * tray.getDimension());
-            y1 = (int) (Math.random() * tray.getDimension());
+            while (!tray.isFree(x1, y1)) {
+                x1 = (int) (Math.random() * tray.getDimension());
+                y1 = (int) (Math.random() * tray.getDimension());
+            }
+            bestX1 = x1;
+            bestY1 = y1;
+            if (player.getColor() == ColorConstants.CLEAR) {
+                tray.setClearCell(x1, y1);
+            } else if (player.getColor() == ColorConstants.DARK) {
+                tray.setDarkCell(x1, y1);
+            }
+
+            while (!tray.isFree(x2, y2)) {
+                x2 = (int) (Math.random() * tray.getDimension());
+                y2 = (int) (Math.random() * tray.getDimension());
+            }
+            bestX2 = x2;
+            bestY2 = y2;
+            if (player.getColor() == ColorConstants.CLEAR) {
+                tray.setClearCell(x2, y2);
+            } else if (player.getColor() == ColorConstants.DARK) {
+                tray.setDarkCell(x2, y2);
+            }
+
+            send2BestCells();
+        } else {
+            sendWantToStopGame();
         }
-        bestX1 = x1;
-        bestY1 = y1;
-
-        while (!tray.isFree(x2, y2)) {
-            x2 = (int) (Math.random() * tray.getDimension());
-            y2 = (int) (Math.random() * tray.getDimension());
-        }
-        bestX2 = x2;
-        bestY2 = y2;
-
-        if (player.getColor() == ColorConstants.CLEAR) {
-            tray.setClearCell(x1, y1);
-            tray.setClearCell(x2, y2);
-        } else if (player.getColor() == ColorConstants.DARK) {
-            tray.setDarkCell(x1, y1);
-            tray.setDarkCell(x2, y2);
-        }
-
-        send2BestCells();
     }
 
     @Override
@@ -75,5 +81,19 @@ public class Random extends Algorithm {
             player.setColor(ColorConstants.DARK);
         }
         sendPlayerColor();
+    }
+
+    @Override
+    public boolean canISet2Cells() {
+        int numberCellFree = 0;
+
+        for (int i = 0; i < tray.getMatrice().length; i++) {
+            for (int j = 0; j < tray.getMatrice()[i].length; j++) {
+                if (tray.getMatrice()[i][j].getColor() == "0") {
+                    numberCellFree++;
+                }
+            }
+        }
+        return numberCellFree >= 2;
     }
 }

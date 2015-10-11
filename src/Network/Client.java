@@ -134,11 +134,11 @@ public class Client {
                     break;
                 case NetworkConstants.CLEAR_PLAYER:
                     System.out.println("Vous êtes le joueur clair !");
-                    getPlayer().setColor(ColorConstants.CLEAR);
+                    player.setColor(ColorConstants.CLEAR);
                     break;
                 case NetworkConstants.DARK_PLAYER:
                     System.out.println("Vous êtes le joueur foncé !");
-                    getPlayer().setColor(ColorConstants.DARK);
+                    player.setColor(ColorConstants.DARK);
                     break;
                 case NetworkConstants.PLAYER_STOP:
                     System.out.println("L'autre joueur ne peut plus jouer !");
@@ -176,8 +176,9 @@ public class Client {
 
                         if (player.getTurnNumber() == 1) {
                             player.initSecondPlayer();
+                        } else if (player.getTurnNumber() > 1) {
+                            player.play();
                         }
-                        player.play();
 
                     } else if (message.charAt(i) == '-') {
                         System.out.println("L'autre joueur a posé un pont sur la case : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");

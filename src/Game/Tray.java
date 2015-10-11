@@ -1,5 +1,7 @@
 package Game;
 
+import Constant.ColorConstants;
+
 /**
  * Created by Maxime on 10/10/2015.
  */
@@ -32,14 +34,14 @@ public class Tray {
         return result;
     }
 
-    public void setClearCell(int x, int y) {
-        System.err.println("Case clair posée en [" + x + "][" + y + "]");
-        matrice[x][y].setColor("c");
+    public void setClearCell(int y, int x) {
+        System.err.println("Case clair posée en [" + y + "][" + x + "]");
+        matrice[y][x].setColor(ColorConstants.CLEAR);
     }
 
-    public void setDarkCell(int x, int y) {
-        System.err.println("Case foncé posée en [" + x + "][" + y + "]");
-        matrice[x][y].setColor("d");
+    public void setDarkCell(int y, int x) {
+        System.err.println("Case foncé posée en [" + y + "][" + x + "]");
+        matrice[y][x].setColor(ColorConstants.DARK);
     }
 
     public int getDimension() {

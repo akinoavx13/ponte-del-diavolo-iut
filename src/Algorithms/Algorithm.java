@@ -2,6 +2,7 @@ package Algorithms;
 
 import Constant.ColorConstants;
 import Constant.NetworkConstants;
+import Game.Cell;
 import Game.Player;
 import Game.Tray;
 import Network.Client;
@@ -51,9 +52,63 @@ public abstract class Algorithm {
         bestY2 = y;
     }
 
+    public void sendWantToStopGame() {
+        client.sendMessage("a");
+    }
+
+    public int countIslandIsolated(String color) {
+        int numberIslandIsolated = 0;
+        Cell[][] matrice = tray.getMatrice();
+
+        for (int i = 0; i < matrice.length; i++) {
+            for (int j = 0; j < matrice[i].length; j++) {
+                matrice[i][j].setVisited(false);
+            }
+        }
+
+        for (int i = 0; i < matrice.length; i++) {
+            for (int j = 0; j < matrice[i].length; j++) {
+                if (totalAdjacent(i, j, color) == 4) {
+                    numberIslandIsolated++;
+                }
+            }
+        }
+
+        return numberIslandIsolated;
+    }
+
+    public int totalAdjacent(int x, int y, String color) {
+        int totalAdjacent = 0;
+        Cell[][] matrice = tray.getMatrice();
+
+        if (!matrice[x][y].isVisited() && matrice[x][y].getColor() == color) {
+            totalAdjacent++;
+            matrice[x][y].setVisited(true);
+            if (x + 1 < tray.getDimension()) {
+                totalAdjacent += totalAdjacent(x + 1, y, color);
+            }
+
+            if (y + 1 < tray.getDimension()) {
+                totalAdjacent += totalAdjacent(x, y + 1, color);
+            }
+
+            if (y - 1 >= 0) {
+                totalAdjacent += totalAdjacent(x, y - 1, color);
+            }
+
+            if (x - 1 >= 0) {
+                totalAdjacent += totalAdjacent(x - 1, y, color);
+            }
+        }
+        return totalAdjacent;
+    }
+
     public abstract void init2Cells();
 
     public abstract void searchBest2Cells();
 
     public abstract void chooseOneColor();
+
+    public abstract boolean canISet2Cells();
+
 }

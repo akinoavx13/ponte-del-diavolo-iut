@@ -8,11 +8,13 @@ public class Cell {
     private int x;
     private int y;
     private String color;
+    private boolean visited;
 
     public Cell(int x, int y, String color) {
         this.x = x;
         this.y = y;
         this.color = color;
+        this.visited = false;
     }
 
     public String getColor() {
@@ -29,5 +31,13 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 }
