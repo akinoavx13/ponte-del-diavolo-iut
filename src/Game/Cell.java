@@ -7,7 +7,9 @@ public class Cell {
 
     private int x;
     private int y;
+
     private String color;
+
     private boolean visited;
 
     public Cell(int x, int y, String color) {
@@ -17,9 +19,17 @@ public class Cell {
         this.visited = false;
     }
 
+    /*********
+     * GETTERS*
+     *********/
+
     public String getColor() {
         return color;
     }
+
+    /*********
+     *SETTERS*
+     *********/
 
     public void setColor(String color) {
         this.color = color;
@@ -33,6 +43,10 @@ public class Cell {
         return y;
     }
 
+    public boolean isThisColor(String color) {
+        return this.color == color;
+    }
+
     public boolean isVisited() {
         return visited;
     }
@@ -41,7 +55,4 @@ public class Cell {
         this.visited = visited;
     }
 
-    public boolean isThisColor(String color) {
-        return this.color == color;
-    }
 }
