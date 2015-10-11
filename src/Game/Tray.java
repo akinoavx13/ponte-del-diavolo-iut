@@ -9,6 +9,7 @@ import Constant.GameConstants;
 public class Tray {
 
     private Cell[][] matrice;
+
     private int dimension;
 
     public Tray(int dimension) {
@@ -20,6 +21,24 @@ public class Tray {
                 matrice[i][j] = new Cell(i, j, "0");
             }
         }
+    }
+
+    /*********
+     * METHODS*
+     *********/
+
+    public void setClearCell(int x, int y) {
+        if (GameConstants.isVerbose()) {
+            System.err.println("Case clair posée en [" + x + "][" + y + "]");
+        }
+        matrice[x][y].setColor(ColorConstants.CLEAR);
+    }
+
+    public void setDarkCell(int x, int y) {
+        if (GameConstants.isVerbose()) {
+            System.err.println("Case foncé posée en [" + x + "][" + y + "]");
+        }
+        matrice[x][y].setColor(ColorConstants.DARK);
     }
 
     @Override
@@ -35,19 +54,9 @@ public class Tray {
         return result;
     }
 
-    public void setClearCell(int y, int x) {
-        if (GameConstants.isVerbose()) {
-            System.err.println("Case clair posée en [" + y + "][" + x + "]");
-        }
-        matrice[y][x].setColor(ColorConstants.CLEAR);
-    }
-
-    public void setDarkCell(int y, int x) {
-        if (GameConstants.isVerbose()) {
-            System.err.println("Case foncé posée en [" + y + "][" + x + "]");
-        }
-        matrice[y][x].setColor(ColorConstants.DARK);
-    }
+    /*********
+     * GETTERS*
+     *********/
 
     public int getDimension() {
         return dimension;
@@ -65,17 +74,8 @@ public class Tray {
         return matrice[x][y].getColor() == "0";
     }
 
-    public int howManyCells(String color) {
-        int numberOfCells = 0;
-
-        for (int i = 0; i < matrice.length; i++) {
-            for (int j = 0; j < matrice[i].length; j++) {
-                if (matrice[i][j].isThisColor(color)) {
-                    numberOfCells++;
-                }
-            }
-        }
-        return numberOfCells;
-    }
+    /*********
+     * SETTERS*
+     *********/
 
 }

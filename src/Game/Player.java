@@ -11,8 +11,11 @@ import Network.Client;
 public class Player {
 
     private boolean firstPlayer;
+
     private String color;
+
     private Algorithm algorithm = null;
+
     private int turnNumber;
 
     public Player(boolean firstPlayer) {
@@ -25,33 +28,9 @@ public class Player {
         }
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public boolean isFirstPlayer() {
-        return firstPlayer;
-    }
-
-    public void setRandomAlgorithm(Tray tray, Client client) {
-        this.algorithm = new Random(tray, client, this);
-    }
-
-    public Algorithm getAlgorithm() {
-        return algorithm;
-    }
-
-    public int getTurnNumber() {
-        return turnNumber;
-    }
-
-    public void setTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
-    }
+    /*********
+     * METHODS*
+     *********/
 
     public void initFirstPlayer() {
         algorithm.init2Cells();
@@ -68,6 +47,7 @@ public class Player {
         algorithm.searchBest2Cells();
     }
 
+    @Override
     public String toString() {
         String result = "";
 
@@ -81,5 +61,43 @@ public class Player {
 
         return result;
     }
+
+
+    /*********
+     * GETTERS*
+     *********/
+
+    public String getColor() {
+        return color;
+    }
+
+    /*********
+     * SETTERS*
+     *********/
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isFirstPlayer() {
+        return firstPlayer;
+    }
+
+    public Algorithm getAlgorithm() {
+        return algorithm;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
+    public void setRandomAlgorithm(Tray tray, Client client) {
+        this.algorithm = new Random(tray, client, this);
+    }
+
 
 }

@@ -180,11 +180,11 @@ public class Client {
                         System.out.println("L'autre joueur a joué 2 cases : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");
 
                         if (player.getColor() == ColorConstants.CLEAR) {
-                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(0))), Integer.parseInt(String.valueOf(message.charAt(1))));
-                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(3))), Integer.parseInt(String.valueOf(message.charAt(4))));
+                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(1))), Integer.parseInt(String.valueOf(message.charAt(0))));
+                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(4))), Integer.parseInt(String.valueOf(message.charAt(3))));
                         } else if (player.getColor() == ColorConstants.DARK) {
-                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(0))), Integer.parseInt(String.valueOf(message.charAt(1))));
-                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(3))), Integer.parseInt(String.valueOf(message.charAt(4))));
+                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(1))), Integer.parseInt(String.valueOf(message.charAt(0))));
+                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(4))), Integer.parseInt(String.valueOf(message.charAt(3))));
                         }
 
                         if (player.getTurnNumber() == 1) {

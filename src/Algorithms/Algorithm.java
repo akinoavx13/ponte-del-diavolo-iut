@@ -20,11 +20,6 @@ public abstract class Algorithm {
 
     protected int bestX1, bestY1, bestX2, bestY2;
 
-    /**
-     * @param tray
-     * @param client
-     * @param player
-     */
     public Algorithm(Tray tray, Client client, Player player) {
         this.tray = tray;
         this.client = client;
@@ -32,15 +27,9 @@ public abstract class Algorithm {
     }
 
     /**********
-     *METHODES*
+     *METHODS*
      **********/
 
-    /**
-     * count the island number of a color
-     *
-     * @param color
-     * @return
-     */
     public int countIslandIsolated(String color) {
         int numberIslandIsolated = 0;
         Cell[][] matrice = tray.getMatrice();
@@ -65,14 +54,6 @@ public abstract class Algorithm {
         return numberIslandIsolated;
     }
 
-    /**
-     * count the number of cell adjacent of a color
-     *
-     * @param x
-     * @param y
-     * @param color
-     * @return
-     */
     public int totalAdjacent(int x, int y, String color) {
         int totalAdjacent = 0;
         Cell[][] matrice = tray.getMatrice();
@@ -106,16 +87,10 @@ public abstract class Algorithm {
         return totalAdjacent;
     }
 
-    /**
-     * Send the 2 best cells find by the algorithme
-     */
     public void send2BestCells() {
         client.sendCellPos(bestX1, bestY1, bestX2, bestY2);
     }
 
-    /**
-     * send the color of the player
-     */
     public void sendPlayerColor() {
         if (player.getColor() == ColorConstants.CLEAR) {
             client.sendMessage(NetworkConstants.CLEAR_PLAYER);
@@ -124,9 +99,6 @@ public abstract class Algorithm {
         }
     }
 
-    /**
-     * send the message when we wan't to stop the game
-     */
     public void sendWantToStopGame() {
         client.sendMessage("a");
     }
@@ -135,46 +107,23 @@ public abstract class Algorithm {
      *ABSTRACT METHODES*
      *******************/
 
-    /**
-     * set the two first cells during the initialisation
-     */
     public abstract void init2Cells();
 
-    /**
-     * set the two best cells configuration
-     */
     public abstract void searchBest2Cells();
 
-    /**
-     * Choose the color of the player during the initialisation
-     */
     public abstract void chooseOneColor();
 
-
-    /**
-     * check if there are 2 places to set cells
-     *
-     * @return
-     */
     public abstract boolean canISet2Cells();
 
     /*********
      *SETTERS*
      *********/
 
-    /**
-     * @param x
-     * @param y
-     */
     protected void setBestCell1(int x, int y) {
         bestX1 = x;
         bestY1 = y;
     }
 
-    /**
-     * @param x
-     * @param y
-     */
     protected void setBestCell2(int x, int y) {
         bestX2 = x;
         bestY2 = y;
