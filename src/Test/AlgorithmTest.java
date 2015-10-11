@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class AlgorithmTest {
 
     @Test
-    public void countIslandIsolatedTest() {
+    public void testCountIslandIsolated() throws Exception {
         Tray tray = new Tray(5);
 
         tray.setClearCell(0, 0);
@@ -37,4 +37,24 @@ public class AlgorithmTest {
         assertTrue(random.countIslandIsolated(ColorConstants.CLEAR) == 2);
     }
 
+    @Test
+    public void testTotalAdjacent() throws Exception {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(0, 0);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(2, 0);
+
+        Random random = new Random(tray, null, null);
+
+        //init the matrice, cells are not visited
+        for (int i = 0; i < tray.getMatrice().length; i++) {
+            for (int j = 0; j < tray.getMatrice()[i].length; j++) {
+                tray.getMatrice()[i][j].setVisited(false);
+            }
+        }
+
+        assertTrue(random.totalAdjacent(0, 0, ColorConstants.CLEAR) == 4);
+    }
 }

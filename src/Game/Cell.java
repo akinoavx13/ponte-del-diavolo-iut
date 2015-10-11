@@ -40,4 +40,8 @@ public class Cell {
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
+
+    public boolean isThisColor(String color) {
+        return this.color == color;
+    }
 }
