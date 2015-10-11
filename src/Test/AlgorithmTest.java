@@ -13,10 +13,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class AlgorithmTest {
 
+    public AlgorithmTest() {
+        GameConstants.setVerbose(false);
+    }
+
     @Test
     public void testCountIslandIsolated() throws Exception {
-        GameConstants.setVerbose(false);
-
         Tray tray = new Tray(5);
         tray.setClearCell(0, 0);
         tray.setClearCell(0, 1);
@@ -41,8 +43,6 @@ public class AlgorithmTest {
 
     @Test
     public void testTotalAdjacent() throws Exception {
-        GameConstants.setVerbose(false);
-
         Tray tray = new Tray(5);
 
         tray.setClearCell(0, 0);

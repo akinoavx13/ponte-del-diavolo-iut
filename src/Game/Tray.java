@@ -65,4 +65,17 @@ public class Tray {
         return matrice[x][y].getColor() == "0";
     }
 
+    public int howManyCells(String color) {
+        int numberOfCells = 0;
+
+        for (int i = 0; i < matrice.length; i++) {
+            for (int j = 0; j < matrice[i].length; j++) {
+                if (matrice[i][j].isThisColor(color)) {
+                    numberOfCells++;
+                }
+            }
+        }
+        return numberOfCells;
+    }
+
 }

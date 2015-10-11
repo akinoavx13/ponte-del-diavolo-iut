@@ -136,12 +136,12 @@ public abstract class Algorithm {
      *******************/
 
     /**
-     * set the two first cells
+     * set the two first cells during the initialisation
      */
     public abstract void init2Cells();
 
     /**
-     * find the 2 best cells
+     * set the two best cells configuration
      */
     public abstract void searchBest2Cells();
 
