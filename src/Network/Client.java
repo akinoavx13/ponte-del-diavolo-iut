@@ -60,6 +60,9 @@ public class Client {
                 e.printStackTrace();
             }
         }
+        if (GameConstants.isVerbose()) {
+            System.out.print("Déconnexion du serveur");
+        }
     }
 
     public String receiveMessage() {
@@ -91,7 +94,9 @@ public class Client {
                 }
             }
         } else {
-            System.out.println("Envoi du message : \"" + message + "\"");
+            if (GameConstants.isVerbose()) {
+                System.out.println("Envoi du message : \"" + message + "\"");
+            }
         }
     }
 
@@ -110,10 +115,6 @@ public class Client {
         player = new Player(isFirstPlayer);
     }
 
-    public Player getPlayer() {
-        return this.player;
-    }
-
     public void manageMessages() {
         String message = receiveMessage();
 
@@ -122,29 +123,41 @@ public class Client {
                 case NetworkConstants.NULL:
                     break;
                 case NetworkConstants.FIRST_PLAYER:
-                    System.out.println("Vous êtes le premier joueur !");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Vous êtes le premier joueur !");
+                    }
                     createPlayer(true);
                     player.setRandomAlgorithm(tray, this);
                     player.initFirstPlayer();
                     break;
                 case NetworkConstants.SECOND_PLAYER:
-                    System.out.println("Vous êtes le deuxième joueur !");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Vous êtes le deuxième joueur !");
+                    }
                     createPlayer(false);
                     player.setRandomAlgorithm(tray, this);
                     break;
                 case NetworkConstants.CLEAR_PLAYER:
-                    System.out.println("Vous êtes le joueur clair !");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Vous êtes le joueur clair !");
+                    }
                     player.setColor(ColorConstants.CLEAR);
                     break;
                 case NetworkConstants.DARK_PLAYER:
-                    System.out.println("Vous êtes le joueur foncé !");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Vous êtes le joueur foncé !");
+                    }
                     player.setColor(ColorConstants.DARK);
                     break;
                 case NetworkConstants.PLAYER_STOP:
-                    System.out.println("L'autre joueur ne peut plus jouer !");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("L'autre joueur ne peut plus jouer !");
+                    }
                     break;
                 case NetworkConstants.GAME_STOP:
-                    System.out.println("Fin de la partie");
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Fin de la partie");
+                    }
                     closeConnectionToServer();
                     System.exit(0);
                     break;

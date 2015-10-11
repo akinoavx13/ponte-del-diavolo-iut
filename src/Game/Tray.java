@@ -1,6 +1,7 @@
 package Game;
 
 import Constant.ColorConstants;
+import Constant.GameConstants;
 
 /**
  * Created by Maxime on 10/10/2015.
@@ -35,12 +36,16 @@ public class Tray {
     }
 
     public void setClearCell(int y, int x) {
-        System.err.println("Case clair posée en [" + y + "][" + x + "]");
+        if (GameConstants.isVerbose()) {
+            System.err.println("Case clair posée en [" + y + "][" + x + "]");
+        }
         matrice[y][x].setColor(ColorConstants.CLEAR);
     }
 
     public void setDarkCell(int y, int x) {
-        System.err.println("Case foncé posée en [" + y + "][" + x + "]");
+        if (GameConstants.isVerbose()) {
+            System.err.println("Case foncé posée en [" + y + "][" + x + "]");
+        }
         matrice[y][x].setColor(ColorConstants.DARK);
     }
 

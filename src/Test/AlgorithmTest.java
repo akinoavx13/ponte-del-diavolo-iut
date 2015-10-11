@@ -2,6 +2,7 @@ package Test;
 
 import Algorithms.Random;
 import Constant.ColorConstants;
+import Constant.GameConstants;
 import Game.Tray;
 import org.junit.Test;
 
@@ -14,8 +15,9 @@ public class AlgorithmTest {
 
     @Test
     public void testCountIslandIsolated() throws Exception {
-        Tray tray = new Tray(5);
+        GameConstants.setVerbose(false);
 
+        Tray tray = new Tray(5);
         tray.setClearCell(0, 0);
         tray.setClearCell(0, 1);
         tray.setClearCell(1, 0);
@@ -39,6 +41,8 @@ public class AlgorithmTest {
 
     @Test
     public void testTotalAdjacent() throws Exception {
+        GameConstants.setVerbose(false);
+
         Tray tray = new Tray(5);
 
         tray.setClearCell(0, 0);
