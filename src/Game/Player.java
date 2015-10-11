@@ -13,8 +13,10 @@ public class Player {
     private boolean firstPlayer;
     private String color;
     private Algorithm algorithm = null;
+    private int turnNumber;
 
     public Player(boolean firstPlayer) {
+        turnNumber = 0;
         this.firstPlayer = firstPlayer;
         if (firstPlayer) {
             color = ColorConstants.CLEAR;
@@ -36,10 +38,48 @@ public class Player {
     }
 
     public void setRandomAlgorithm(Tray tray, Client client) {
-        this.algorithm = new Random(tray, client);
+        this.algorithm = new Random(tray, client, this);
     }
 
     public Algorithm getAlgorithm() {
         return algorithm;
     }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
+    public void initFirstPlayer() {
+        algorithm.init2Cells();
+    }
+
+    public void initSecondPlayer() {
+        algorithm.chooseOneColor();
+        if (color == ColorConstants.DARK) {
+            algorithm.searchBest2Cells();
+        }
+    }
+
+    public void play() {
+        algorithm.searchBest2Cells();
+    }
+
+    public String toString() {
+        String result = "";
+
+        result += "Adversaire : (color = " + color + "), (";
+
+        if (firstPlayer) {
+            result += "firstPlayer)";
+        } else {
+            result += "secondPlayer)";
+        }
+
+        return result;
+    }
+
 }

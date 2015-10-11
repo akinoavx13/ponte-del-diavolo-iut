@@ -1,5 +1,6 @@
 package Test;
 
+import Algorithms.Random;
 import Game.Player;
 import org.junit.Test;
 
@@ -14,6 +15,13 @@ public class PlayerTest {
     public void constructorTest() {
         Player player = new Player(true);
         assertTrue(player.isFirstPlayer());
+    }
+
+    @Test
+    public void setRandomAlgorithme() {
+        Player player = new Player(true);
+        player.setRandomAlgorithm(null, null);
+        assertTrue(player.getAlgorithm() instanceof Random);
     }
 
 }

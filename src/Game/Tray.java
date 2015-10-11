@@ -1,7 +1,5 @@
 package Game;
 
-import Constant.ColorConstants;
-
 /**
  * Created by Maxime on 10/10/2015.
  */
@@ -21,6 +19,7 @@ public class Tray {
         }
     }
 
+    @Override
     public String toString() {
         String result = "";
 
@@ -34,14 +33,29 @@ public class Tray {
     }
 
     public void setClearCell(int x, int y) {
-        matrice[x][y].setColor(ColorConstants.CLEAR);
+        System.err.println("Case clair posée en [" + x + "][" + y + "]");
+        matrice[x][y].setColor("c");
     }
 
     public void setDarkCell(int x, int y) {
-        matrice[x][y].setColor(ColorConstants.DARK);
+        System.err.println("Case foncé posée en [" + x + "][" + y + "]");
+        matrice[x][y].setColor("d");
     }
 
     public int getDimension() {
         return dimension;
     }
+
+    public Cell[][] getMatrice() {
+        return matrice;
+    }
+
+    public Cell getCellIn(int x, int y) {
+        return matrice[x][y];
+    }
+
+    public boolean isFree(int x, int y) {
+        return matrice[x][y].getColor() == "0";
+    }
+
 }

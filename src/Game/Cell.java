@@ -22,4 +22,12 @@ public class Cell {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
