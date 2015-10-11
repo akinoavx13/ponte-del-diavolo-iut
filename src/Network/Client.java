@@ -173,6 +173,13 @@ public class Client {
             }
 
             if (message.length() == 5) {
+
+                int rowCell1 = Integer.parseInt(String.valueOf(message.charAt(0)));
+                int columnCell1 = Integer.parseInt(String.valueOf(message.charAt(1)));
+
+                int rowCell2 = Integer.parseInt(String.valueOf(message.charAt(3)));
+                int columnCell2 = Integer.parseInt(String.valueOf(message.charAt(4)));
+
                 System.out.print("Tour n° " + player.getTurnNumber() + "\t");
                 player.setTurnNumber(player.getTurnNumber() + 1);
                 for (int i = 0; i < message.length(); i++) {
@@ -180,11 +187,11 @@ public class Client {
                         System.out.println("L'autre joueur a joué 2 cases : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");
 
                         if (player.getColor() == ColorConstants.CLEAR) {
-                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(1))), Integer.parseInt(String.valueOf(message.charAt(0))));
-                            tray.setDarkCell(Integer.parseInt(String.valueOf(message.charAt(4))), Integer.parseInt(String.valueOf(message.charAt(3))));
+                            tray.setDarkCell(columnCell1, rowCell1);
+                            tray.setDarkCell(columnCell2, rowCell2);
                         } else if (player.getColor() == ColorConstants.DARK) {
-                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(1))), Integer.parseInt(String.valueOf(message.charAt(0))));
-                            tray.setClearCell(Integer.parseInt(String.valueOf(message.charAt(4))), Integer.parseInt(String.valueOf(message.charAt(3))));
+                            tray.setClearCell(columnCell1, rowCell1);
+                            tray.setClearCell(columnCell2, rowCell2);
                         }
 
                         if (player.getTurnNumber() == 1) {

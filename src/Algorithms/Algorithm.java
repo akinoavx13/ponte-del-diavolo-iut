@@ -35,14 +35,14 @@ public abstract class Algorithm {
         Cell[][] matrice = tray.getMatrice();
 
         //init the matrice, cells are not visited
-        for (int i = 0; i < matrice.length; i++) {
-            for (int j = 0; j < matrice[i].length; j++) {
+        for (int i = 0; i < tray.getDimension(); i++) {
+            for (int j = 0; j < tray.getDimension(); j++) {
                 matrice[i][j].setVisited(false);
             }
         }
 
-        for (int i = 0; i < matrice.length; i++) {
-            for (int j = 0; j < matrice[i].length; j++) {
+        for (int i = 0; i < tray.getDimension(); i++) {
+            for (int j = 0; j < tray.getDimension(); j++) {
 
                 //count if there are 4 cells adjacent.
                 if (totalAdjacent(i, j, color) == 4) {

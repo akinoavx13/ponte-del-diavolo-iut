@@ -104,8 +104,8 @@ public class Random extends Algorithm {
     public boolean canISet2Cells() {
         int numberCellFree = 0;
 
-        for (int i = 0; i < tray.getMatrice().length; i++) {
-            for (int j = 0; j < tray.getMatrice()[i].length; j++) {
+        for (int i = 0; i < tray.getDimension(); i++) {
+            for (int j = 0; j < tray.getDimension(); j++) {
                 if (tray.isFree(i, j)) {
                     numberCellFree++;
                 }

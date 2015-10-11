@@ -24,7 +24,7 @@ public class Tray {
     }
 
     /*********
-     * METHODS*
+     *METHODS*
      *********/
 
     public void setClearCell(int x, int y) {
@@ -45,9 +45,9 @@ public class Tray {
     public String toString() {
         String result = "";
 
-        for (int i = 0; i < matrice.length; i++) {
-            for (int j = 0; j < matrice[i].length; j++) {
-                result += "[" + matrice[i][j].getColor() + "]";
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                result += "[" + matrice[j][i].getColor() + "]";
             }
             result += "\n";
         }
