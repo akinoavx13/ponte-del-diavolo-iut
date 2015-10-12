@@ -18,7 +18,7 @@ public class Tray {
 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                matrice[i][j] = new Cell(i, j, "0");
+                matrice[i][j] = new Cell(i, j, ColorConstants.NULL);
             }
         }
     }
@@ -39,6 +39,26 @@ public class Tray {
             System.err.println("Case foncé posée en [" + x + "][" + y + "]");
         }
         matrice[x][y].setColor(ColorConstants.DARK);
+    }
+
+    public void setCellTo0(int x, int y) {
+        matrice[x][y].setColor(ColorConstants.NULL);
+    }
+
+    public void setMatriceUnvisited() {
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
+                matrice[x][y].setVisited(false);
+            }
+        }
+    }
+
+    public void setMatriceTo0() {
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
+                setCellTo0(x, y);
+            }
+        }
     }
 
     @Override
@@ -71,7 +91,7 @@ public class Tray {
     }
 
     public boolean isFree(int x, int y) {
-        return matrice[x][y].getColor() == "0";
+        return matrice[x][y].getColor() == ColorConstants.NULL;
     }
 
     /*********

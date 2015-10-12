@@ -64,6 +64,65 @@ public class TrayTest {
     @Test
     public void testIsFree() throws Exception {
         Tray tray = new Tray(10);
+        tray.setClearCell(0, 0);
+
+        assertTrue(!tray.isFree(0, 0));
+
         assertTrue(tray.isFree(4, 4));
     }
+
+    @Test
+    public void testSetCellTo0() {
+        Tray tray = new Tray(10);
+        tray.setClearCell(0, 0);
+
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.CLEAR);
+        tray.setCellTo0(0, 0);
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.NULL);
+    }
+
+    @Test
+    public void testSetMatriceUnvisited() {
+        Tray tray = new Tray(10);
+        tray.getCellIn(0, 0).setVisited(true);
+        tray.getCellIn(1, 0).setVisited(true);
+        tray.getCellIn(2, 0).setVisited(true);
+        tray.getCellIn(3, 0).setVisited(true);
+
+        assertTrue(tray.getCellIn(0, 0).isVisited());
+        assertTrue(tray.getCellIn(1, 0).isVisited());
+        assertTrue(tray.getCellIn(2, 0).isVisited());
+        assertTrue(tray.getCellIn(3, 0).isVisited());
+
+        tray.setMatriceUnvisited();
+
+        assertTrue(!tray.getCellIn(0, 0).isVisited());
+        assertTrue(!tray.getCellIn(1, 0).isVisited());
+        assertTrue(!tray.getCellIn(2, 0).isVisited());
+        assertTrue(!tray.getCellIn(3, 0).isVisited());
+
+    }
+
+    @Test
+    public void testSetMatriceTo0() {
+        Tray tray = new Tray(10);
+        tray.setClearCell(0, 0);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(2, 0);
+        tray.setClearCell(3, 0);
+
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.CLEAR);
+        assertTrue(tray.getCellIn(1, 0).getColor() == ColorConstants.CLEAR);
+        assertTrue(tray.getCellIn(2, 0).getColor() == ColorConstants.CLEAR);
+        assertTrue(tray.getCellIn(3, 0).getColor() == ColorConstants.CLEAR);
+
+        tray.setMatriceTo0();
+
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.NULL);
+        assertTrue(tray.getCellIn(1, 0).getColor() == ColorConstants.NULL);
+        assertTrue(tray.getCellIn(2, 0).getColor() == ColorConstants.NULL);
+        assertTrue(tray.getCellIn(3, 0).getColor() == ColorConstants.NULL);
+
+    }
+
 }

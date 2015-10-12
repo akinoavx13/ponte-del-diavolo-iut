@@ -1,6 +1,7 @@
 package Test;
 
 import Algorithms.Random;
+import Constant.ColorConstants;
 import Constant.GameConstants;
 import Game.Player;
 import Game.Tray;
@@ -27,4 +28,55 @@ public class RandomTest {
         tray.setClearCell(0, 1);
         assertTrue(random.canISet2Cells());
     }
+
+    @Test
+    public void testSearchFirstBestCell() {
+        Tray tray = new Tray(4);
+        Player player = new Player(true);
+
+        Random random = new Random(tray, null, player);
+
+        for (int i = 0; i < 1000; i++) {
+            tray.setMatriceTo0();
+
+            tray.setClearCell(0, 0);
+            tray.setClearCell(1, 0);
+            tray.setClearCell(0, 1);
+            tray.setClearCell(0, 2);
+
+            random.searchFirstBestCell();
+            random.searchSecondBestCell();
+
+            assertTrue(tray.getCellIn(2, 0).getColor() != ColorConstants.CLEAR);
+            assertTrue(tray.getCellIn(1, 1).getColor() != ColorConstants.CLEAR);
+            assertTrue(tray.getCellIn(1, 2).getColor() != ColorConstants.CLEAR);
+            assertTrue(tray.getCellIn(0, 3).getColor() != ColorConstants.CLEAR);
+        }
+    }
+
+    @Test
+    public void testSearchSecondBestCell() {
+        Tray tray = new Tray(4);
+        Player player = new Player(false);
+
+        Random random = new Random(tray, null, player);
+
+        for (int i = 0; i < 1000; i++) {
+            tray.setMatriceTo0();
+
+            tray.setDarkCell(0, 0);
+            tray.setDarkCell(1, 0);
+            tray.setDarkCell(0, 1);
+            tray.setDarkCell(0, 2);
+
+            random.searchFirstBestCell();
+            random.searchSecondBestCell();
+
+            assertTrue(tray.getCellIn(2, 0).getColor() != ColorConstants.DARK);
+            assertTrue(tray.getCellIn(1, 1).getColor() != ColorConstants.DARK);
+            assertTrue(tray.getCellIn(1, 2).getColor() != ColorConstants.DARK);
+            assertTrue(tray.getCellIn(0, 3).getColor() != ColorConstants.DARK);
+        }
+    }
+
 }

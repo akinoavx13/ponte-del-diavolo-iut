@@ -30,27 +30,18 @@ public abstract class Algorithm {
      * METHODS*
      **********/
 
-    public int calculateScoreForOnePlayer(String color) {
-        int score = 0;
-        return score;
-    }
-
     public int countIslandIsolated(String color) {
         int numberIslandIsolated = 0;
         Cell[][] matrice = tray.getMatrice();
 
         //init the matrice, cells are not visited
-        for (int i = 0; i < tray.getDimension(); i++) {
-            for (int j = 0; j < tray.getDimension(); j++) {
-                matrice[i][j].setVisited(false);
-            }
-        }
+        tray.setMatriceUnvisited();
 
         for (int i = 0; i < tray.getDimension(); i++) {
             for (int j = 0; j < tray.getDimension(); j++) {
 
                 //count if there are 4 cells adjacent.
-                if (totalAdjacent(i, j, color) == 4) {
+                if (totalCellsAdjacent(i, j, color) == 4) {
                     numberIslandIsolated++;
                 }
             }
@@ -59,7 +50,7 @@ public abstract class Algorithm {
         return numberIslandIsolated;
     }
 
-    public int totalAdjacent(int x, int y, String color) {
+    public int totalCellsAdjacent(int x, int y, String color) {
         int totalAdjacent = 0;
         Cell[][] matrice = tray.getMatrice();
 
@@ -71,22 +62,22 @@ public abstract class Algorithm {
 
             //check above
             if (y - 1 >= 0) {
-                totalAdjacent += totalAdjacent(x, y - 1, color);
+                totalAdjacent += totalCellsAdjacent(x, y - 1, color);
             }
 
             //check bellow
             if (y + 1 < tray.getDimension()) {
-                totalAdjacent += totalAdjacent(x, y + 1, color);
+                totalAdjacent += totalCellsAdjacent(x, y + 1, color);
             }
 
             //check left
             if (x - 1 >= 0) {
-                totalAdjacent += totalAdjacent(x - 1, y, color);
+                totalAdjacent += totalCellsAdjacent(x - 1, y, color);
             }
 
             //check right
             if (x + 1 < tray.getDimension()) {
-                totalAdjacent += totalAdjacent(x + 1, y, color);
+                totalAdjacent += totalCellsAdjacent(x + 1, y, color);
             }
         }
         return totalAdjacent;
@@ -120,6 +111,10 @@ public abstract class Algorithm {
     public abstract void chooseOneColor();
 
     public abstract boolean canISet2Cells();
+
+    public abstract void searchFirstBestCell();
+
+    public abstract void searchSecondBestCell();
 
     /*********
      * SETTERS*

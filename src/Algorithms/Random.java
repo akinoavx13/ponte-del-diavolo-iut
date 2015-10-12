@@ -44,40 +44,77 @@ public class Random extends Algorithm {
     @Override
     public void searchBest2Cells() {
         if (canISet2Cells()) {
-            int x1 = (int) (Math.random() * tray.getDimension());
-            int y1 = (int) (Math.random() * tray.getDimension());
-            int x2 = (int) (Math.random() * tray.getDimension());
-            int y2 = (int) (Math.random() * tray.getDimension());
 
-            //if the place is already taken
-            while (!tray.isFree(x1, y1)) {
-                x1 = (int) (Math.random() * tray.getDimension());
-                y1 = (int) (Math.random() * tray.getDimension());
-            }
-            bestX1 = x1;
-            bestY1 = y1;
-            if (player.getColor() == ColorConstants.CLEAR) {
-                tray.setClearCell(bestX1, bestY1);
-            } else if (player.getColor() == ColorConstants.DARK) {
-                tray.setDarkCell(bestX2, bestY2);
-            }
-
-            //if the place is already taken
-            while (!tray.isFree(x2, y2)) {
-                x2 = (int) (Math.random() * tray.getDimension());
-                y2 = (int) (Math.random() * tray.getDimension());
-            }
-            bestX2 = x2;
-            bestY2 = y2;
-            if (player.getColor() == ColorConstants.CLEAR) {
-                tray.setClearCell(bestX1, bestY1);
-            } else if (player.getColor() == ColorConstants.DARK) {
-                tray.setDarkCell(bestX2, bestY2);
-            }
+            searchFirstBestCell();
+            searchSecondBestCell();
 
             send2BestCells();
         } else {
             sendWantToStopGame();
+        }
+    }
+
+    @Override
+    public void searchFirstBestCell() {
+        int x = (int) (Math.random() * tray.getDimension());
+        int y = (int) (Math.random() * tray.getDimension());
+
+        while (!tray.isFree(x, y)) {
+            x = (int) (Math.random() * tray.getDimension());
+            y = (int) (Math.random() * tray.getDimension());
+        }
+        bestX1 = x;
+        bestY1 = y;
+
+        if (player.getColor() == ColorConstants.CLEAR) {
+            tray.setClearCell(bestX1, bestY1);
+
+            tray.setMatriceUnvisited();
+            if (totalCellsAdjacent(bestX1, bestY1, player.getColor()) >= 5) {
+                tray.setCellTo0(bestX1, bestY1);
+                searchFirstBestCell();
+            }
+
+        } else if (player.getColor() == ColorConstants.DARK) {
+            tray.setDarkCell(bestX1, bestY1);
+
+            tray.setMatriceUnvisited();
+            if (totalCellsAdjacent(bestX1, bestY1, player.getColor()) >= 5) {
+                tray.setCellTo0(bestX1, bestY1);
+                searchFirstBestCell();
+            }
+        }
+    }
+
+    @Override
+    public void searchSecondBestCell() {
+        int x = (int) (Math.random() * tray.getDimension());
+        int y = (int) (Math.random() * tray.getDimension());
+
+        while (!tray.isFree(x, y)) {
+            x = (int) (Math.random() * tray.getDimension());
+            y = (int) (Math.random() * tray.getDimension());
+        }
+        bestX2 = x;
+        bestY2 = y;
+
+        if (player.getColor() == ColorConstants.CLEAR) {
+            tray.setClearCell(bestX2, bestY2);
+
+            tray.setMatriceUnvisited();
+            if (totalCellsAdjacent(bestX2, bestY2, player.getColor()) >= 5) {
+                tray.setCellTo0(bestX2, bestY2);
+                searchFirstBestCell();
+            }
+
+        } else if (player.getColor() == ColorConstants.DARK) {
+            tray.setDarkCell(bestX2, bestY2);
+
+            tray.setMatriceUnvisited();
+            if (totalCellsAdjacent(bestX2, bestY2, player.getColor()) >= 5) {
+                tray.setCellTo0(bestX2, bestY2);
+                searchFirstBestCell();
+            }
         }
     }
 
@@ -113,4 +150,5 @@ public class Random extends Algorithm {
         }
         return numberCellFree >= 2 && player.getCellsRemaining() >= 2;
     }
+
 }

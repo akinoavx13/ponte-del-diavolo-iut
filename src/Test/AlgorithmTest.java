@@ -53,12 +53,8 @@ public class AlgorithmTest {
         Random random = new Random(tray, null, null);
 
         //init the matrice, cells are not visited
-        for (int i = 0; i < tray.getMatrice().length; i++) {
-            for (int j = 0; j < tray.getMatrice()[i].length; j++) {
-                tray.getMatrice()[i][j].setVisited(false);
-            }
-        }
+        tray.setMatriceUnvisited();
 
-        assertTrue(random.totalAdjacent(0, 0, ColorConstants.CLEAR) == 4);
+        assertTrue(random.totalCellsAdjacent(0, 0, ColorConstants.CLEAR) == 4);
     }
 }
