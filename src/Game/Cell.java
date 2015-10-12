@@ -12,11 +12,14 @@ public class Cell {
 
     private boolean visited;
 
+    private Bridge bridge;
+
     public Cell(int x, int y, String color) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.visited = false;
+        bridge = null;
     }
 
     /*********
@@ -35,14 +38,6 @@ public class Cell {
         this.color = color;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public boolean isThisColor(String color) {
         return this.color == color;
     }
@@ -55,4 +50,15 @@ public class Cell {
         this.visited = visited;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setBridge(Bridge bridge) {
+        this.bridge = bridge;
+    }
 }

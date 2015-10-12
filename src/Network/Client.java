@@ -107,6 +107,13 @@ public class Client {
         player.setTurnNumber(player.getTurnNumber() + 1);
     }
 
+    public void sendBridgePos(int x1, int y1, int x2, int y2) {
+        String message = "";
+        message += String.valueOf(y1) + String.valueOf(x1) + "-" + String.valueOf(y2) + String.valueOf(x2);
+        sendMessage(message);
+        player.setTurnNumber(player.getTurnNumber() + 1);
+    }
+
     public boolean connectionNotClosed(String message) {
         return message != "F";
     }

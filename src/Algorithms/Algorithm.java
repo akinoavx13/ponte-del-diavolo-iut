@@ -1,6 +1,7 @@
 package Algorithms;
 
 import Constant.ColorConstants;
+import Constant.GameConstants;
 import Constant.NetworkConstants;
 import Game.Cell;
 import Game.Player;
@@ -52,10 +53,14 @@ public abstract class Algorithm {
         return numberIslandIsolated;
     }
 
-
     public void send2BestCells() {
         player.setCellsRemaining(player.getCellsRemaining() - 2);
         client.sendCellPos(bestX1, bestY1, bestX2, bestY2);
+    }
+
+    public void sendBridge() {
+        tray.setBridgeNumber(tray.getBridgeNumber() - 1);
+        client.sendBridgePos(bestX1, bestY1, bestX2, bestY2);
     }
 
     public void sendPlayerColor() {
@@ -127,22 +132,39 @@ public abstract class Algorithm {
 
     public abstract void chooseOneColor();
 
-    public abstract boolean searchFirstBestCell();
+    public abstract boolean searchBestCell(boolean forCell1);
 
-    public abstract boolean searchSecondBestCell();
 
     /*********
      * SETTERS*
      *********/
 
-    protected void setBestCell1(int x, int y) {
-        bestX1 = x;
-        bestY1 = y;
+    protected void setBestCell1() {
+        if (player.getColor() == ColorConstants.CLEAR) {
+            if (GameConstants.isVerbose()) {
+                System.err.println("Posé en tant que bestCell");
+            }
+            tray.setClearCell(bestX1, bestY1);
+        } else if (player.getColor() == ColorConstants.DARK) {
+            if (GameConstants.isVerbose()) {
+                System.err.println("Posé en tant que bestCell");
+            }
+            tray.setDarkCell(bestX1, bestY1);
+        }
     }
 
-    protected void setBestCell2(int x, int y) {
-        bestX2 = x;
-        bestY2 = y;
+    protected void setBestCell2() {
+        if (player.getColor() == ColorConstants.CLEAR) {
+            if (GameConstants.isVerbose()) {
+                System.err.println("Posé en tant que bestCell");
+            }
+            tray.setClearCell(bestX2, bestY2);
+        } else if (player.getColor() == ColorConstants.DARK) {
+            if (GameConstants.isVerbose()) {
+                System.err.println("Posé en tant que bestCell");
+            }
+            tray.setDarkCell(bestX2, bestY2);
+        }
     }
 
 }

@@ -44,8 +44,8 @@ public class RandomTest {
             tray.setClearCell(0, 1);
             tray.setClearCell(0, 2);
 
-            random.searchFirstBestCell();
-            random.searchSecondBestCell();
+            random.searchBestCell(true);
+            random.searchBestCell(false);
 
             assertTrue(tray.getCellIn(2, 0).getColor() != ColorConstants.CLEAR);
             assertTrue(tray.getCellIn(1, 1).getColor() != ColorConstants.CLEAR);
@@ -69,8 +69,8 @@ public class RandomTest {
             tray.setDarkCell(0, 1);
             tray.setDarkCell(0, 2);
 
-            random.searchFirstBestCell();
-            random.searchSecondBestCell();
+            random.searchBestCell(true);
+            random.searchBestCell(false);
 
             assertTrue(tray.getCellIn(2, 0).getColor() != ColorConstants.DARK);
             assertTrue(tray.getCellIn(1, 1).getColor() != ColorConstants.DARK);

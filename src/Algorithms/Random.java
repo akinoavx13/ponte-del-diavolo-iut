@@ -32,8 +32,11 @@ public class Random extends Algorithm {
             tray.setDarkCell(x2, y2);
         }
 
-        setBestCell1(x1, y1);
-        setBestCell2(x2, y2);
+        bestX1 = x1;
+        bestY1 = y1;
+
+        bestX2 = x2;
+        bestY2 = y2;
 
         send2BestCells();
     }
@@ -43,71 +46,58 @@ public class Random extends Algorithm {
      */
     @Override
     public void searchBest2Cells() {
-        if (canSetTwoCells() && searchFirstBestCell() && searchSecondBestCell()) {
-            set2BestCells();
+        if (canSetTwoCells()) {
 
-            send2BestCells();
+            boolean bestCell1Found = searchBestCell(true);
+            if (bestCell1Found) {
+                setBestCell1();
+                boolean bestCell2Found = searchBestCell(false);
+                if (bestCell2Found) {
+                    setBestCell2();
+                    send2BestCells();
+                } else {
+                    tray.setCellToFree(bestX1, bestY1);
+                    sendWantToStopGame();
+                }
+            } else {
+                sendWantToStopGame();
+            }
+
         } else {
             sendWantToStopGame();
         }
     }
 
     @Override
-    public boolean searchFirstBestCell() {
-        boolean result = false;
+    public boolean searchBestCell(boolean forCell1) {
+        boolean result;
+
+        int testNumber = 1;
 
         int x = (int) (Math.random() * tray.getDimension());
         int y = (int) (Math.random() * tray.getDimension());
 
-        if (player.getColor() == ColorConstants.CLEAR) {
-            while (!tray.isFree(x, y)) {
-                x = (int) (Math.random() * tray.getDimension());
-                y = (int) (Math.random() * tray.getDimension());
-            }
-            result = canSetOneCell(x, y, ColorConstants.CLEAR);
-            if (result) {
-                bestX1 = x;
-                bestY1 = y;
-            }
-        } else if (player.getColor() == ColorConstants.DARK) {
-            while (!tray.isFree(x, y)) {
-                x = (int) (Math.random() * tray.getDimension());
-                y = (int) (Math.random() * tray.getDimension());
-            }
-            result = canSetOneCell(x, y, ColorConstants.DARK);
-            if (result) {
-                bestX1 = x;
-                bestY1 = y;
-            }
+        while (!tray.isFree(x, y)) {
+            x = (int) (Math.random() * tray.getDimension());
+            y = (int) (Math.random() * tray.getDimension());
         }
+        result = canSetOneCell(x, y, player.getColor());
 
-        return result;
-    }
-
-    @Override
-    public boolean searchSecondBestCell() {
-        boolean result = false;
-
-        int x = (int) (Math.random() * tray.getDimension());
-        int y = (int) (Math.random() * tray.getDimension());
-
-        if (player.getColor() == ColorConstants.CLEAR) {
+        if (!result && testNumber <= tray.getNumberCellFree() / 2) {
+            x = (int) (Math.random() * tray.getDimension());
+            y = (int) (Math.random() * tray.getDimension());
             while (!tray.isFree(x, y)) {
                 x = (int) (Math.random() * tray.getDimension());
                 y = (int) (Math.random() * tray.getDimension());
             }
-            result = canSetOneCell(x, y, ColorConstants.CLEAR);
-            if (result) {
-                bestX2 = x;
-                bestY2 = y;
-            }
-        } else if (player.getColor() == ColorConstants.DARK) {
-            while (!tray.isFree(x, y)) {
-                x = (int) (Math.random() * tray.getDimension());
-                y = (int) (Math.random() * tray.getDimension());
-            }
-            result = canSetOneCell(x, y, ColorConstants.DARK);
-            if (result) {
+            result = canSetOneCell(x, y, player.getColor());
+
+            testNumber++;
+        } else if (result) {
+            if (forCell1) {
+                bestX1 = x;
+                bestY1 = y;
+            } else {
                 bestX2 = x;
                 bestY2 = y;
             }
