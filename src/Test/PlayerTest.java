@@ -84,7 +84,7 @@ public class PlayerTest {
 
         player.setCellsRemaining(0);
         assertTrue(player.getCellsRemaining() == 0);
-        assertTrue(!random.canISet2Cells());
+        assertTrue(!random.canSetTwoCells());
     }
 
     @Test

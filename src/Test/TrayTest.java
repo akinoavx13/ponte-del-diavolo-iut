@@ -6,6 +6,8 @@ import Game.Cell;
 import Game.Tray;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -77,8 +79,8 @@ public class TrayTest {
         tray.setClearCell(0, 0);
 
         assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.CLEAR);
-        tray.setCellTo0(0, 0);
-        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.NULL);
+        tray.setCellToFree(0, 0);
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.FREE);
     }
 
     @Test
@@ -116,13 +118,87 @@ public class TrayTest {
         assertTrue(tray.getCellIn(2, 0).getColor() == ColorConstants.CLEAR);
         assertTrue(tray.getCellIn(3, 0).getColor() == ColorConstants.CLEAR);
 
-        tray.setMatriceTo0();
+        tray.setMatriceToFree();
 
-        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.NULL);
-        assertTrue(tray.getCellIn(1, 0).getColor() == ColorConstants.NULL);
-        assertTrue(tray.getCellIn(2, 0).getColor() == ColorConstants.NULL);
-        assertTrue(tray.getCellIn(3, 0).getColor() == ColorConstants.NULL);
+        assertTrue(tray.getCellIn(0, 0).getColor() == ColorConstants.FREE);
+        assertTrue(tray.getCellIn(1, 0).getColor() == ColorConstants.FREE);
+        assertTrue(tray.getCellIn(2, 0).getColor() == ColorConstants.FREE);
+        assertTrue(tray.getCellIn(3, 0).getColor() == ColorConstants.FREE);
 
+    }
+
+    @Test
+    public void testTotalAdjacent() throws Exception {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(0, 0);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(2, 0);
+
+        //init the matrice, cells are not visited
+        tray.setMatriceUnvisited();
+
+        assertTrue(tray.totalCellsAdjacent(0, 0, ColorConstants.CLEAR).size() == 4);
+    }
+
+    @Test
+    public void testCellInDiagNotVisited() {
+        Tray tray = new Tray(4);
+
+        tray.setClearCell(0, 0);
+        assertTrue(!tray.cellInDiagNotVisited(0, 0, ColorConstants.CLEAR));
+
+        tray.setClearCell(1, 1);
+        assertTrue(tray.cellInDiagNotVisited(1, 1, ColorConstants.CLEAR));
+
+        Tray tray2 = new Tray(4);
+
+        tray2.setClearCell(0, 1);
+
+        tray2.setClearCell(1, 2);
+        tray2.setClearCell(2, 2);
+        tray2.setClearCell(3, 2);
+        tray2.setClearCell(2, 3);
+
+        ArrayList<Cell> cells = tray2.totalCellsAdjacent(2, 2, ColorConstants.CLEAR);
+
+        assertTrue(cells.size() == 4);
+
+        assertTrue(cells.get(0).getX() == 2);
+        assertTrue(cells.get(0).getY() == 2);
+
+        assertTrue(cells.get(1).getX() == 2);
+        assertTrue(cells.get(1).getY() == 3);
+
+        assertTrue(cells.get(2).getX() == 1);
+        assertTrue(cells.get(2).getY() == 2);
+
+        assertTrue(cells.get(3).getX() == 3);
+        assertTrue(cells.get(3).getY() == 2);
+
+        assertTrue(tray2.cellInDiagNotVisited(cells.get(2).getX(), cells.get(2).getY(), ColorConstants.CLEAR));
+
+        assertTrue(!tray2.cellInDiagNotVisited(cells.get(0).getX(), cells.get(0).getY(), ColorConstants.CLEAR));
+        assertTrue(!tray2.cellInDiagNotVisited(cells.get(1).getX(), cells.get(1).getY(), ColorConstants.CLEAR));
+        assertTrue(!tray2.cellInDiagNotVisited(cells.get(3).getX(), cells.get(3).getY(), ColorConstants.CLEAR));
+
+    }
+
+    @Test
+    public void testIslandInDiagNotVisited() {
+        Tray tray = new Tray(4);
+
+        tray.setClearCell(0, 0);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(1, 1);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(3, 3);
+
+        assertTrue(tray.islandInDiagNotVisited(2, 2, ColorConstants.CLEAR));
+        assertTrue(!tray.islandInDiagNotVisited(3, 3, ColorConstants.CLEAR));
     }
 
 }

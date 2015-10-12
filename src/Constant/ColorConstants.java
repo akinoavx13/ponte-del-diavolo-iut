@@ -7,6 +7,6 @@ public class ColorConstants {
 
     public static final String DARK = "dark";
     public static final String CLEAR = "clear";
-    public static final String NULL = "0";
+    public static final String FREE = "0";
 
 }

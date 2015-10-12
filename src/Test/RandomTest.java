@@ -26,7 +26,7 @@ public class RandomTest {
         Random random = new Random(tray, null, player);
         tray.setClearCell(0, 0);
         tray.setClearCell(0, 1);
-        assertTrue(random.canISet2Cells());
+        assertTrue(random.canSetTwoCells());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class RandomTest {
         Random random = new Random(tray, null, player);
 
         for (int i = 0; i < 1000; i++) {
-            tray.setMatriceTo0();
+            tray.setMatriceToFree();
 
             tray.setClearCell(0, 0);
             tray.setClearCell(1, 0);
@@ -62,7 +62,7 @@ public class RandomTest {
         Random random = new Random(tray, null, player);
 
         for (int i = 0; i < 1000; i++) {
-            tray.setMatriceTo0();
+            tray.setMatriceToFree();
 
             tray.setDarkCell(0, 0);
             tray.setDarkCell(1, 0);

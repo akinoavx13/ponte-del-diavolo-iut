@@ -42,19 +42,31 @@ public class AlgorithmTest {
     }
 
     @Test
-    public void testTotalAdjacent() throws Exception {
-        Tray tray = new Tray(5);
+    public void testCanSetOneCell() {
+        Tray tray = new Tray(4);
 
         tray.setClearCell(0, 0);
         tray.setClearCell(0, 1);
         tray.setClearCell(1, 0);
-        tray.setClearCell(2, 0);
+        tray.setClearCell(1, 1);
 
         Random random = new Random(tray, null, null);
 
-        //init the matrice, cells are not visited
-        tray.setMatriceUnvisited();
+        assertTrue(!random.canSetOneCell(2, 2, ColorConstants.CLEAR));
+        assertTrue(random.canSetOneCell(2, 3, ColorConstants.CLEAR));
 
-        assertTrue(random.totalCellsAdjacent(0, 0, ColorConstants.CLEAR) == 4);
+        Tray tray2 = new Tray(4);
+
+        tray2.setClearCell(0, 1);
+
+        tray2.setClearCell(1, 2);
+        tray2.setClearCell(3, 2);
+        tray2.setClearCell(2, 3);
+
+        Random random2 = new Random(tray2, null, null);
+
+        assertTrue(!random2.canSetOneCell(2, 2, ColorConstants.CLEAR));
+
     }
+
 }
