@@ -5,14 +5,22 @@ package Constant;
  */
 public class GameConstants {
 
-    public static final boolean IN_PROD = false;
-    private static boolean verbose = true;
+    public static boolean IN_PROD = false;
+    private static boolean VERBOSE = true;
 
-    public static boolean isVerbose() {
-        return verbose;
+    public static boolean isInProd() {
+        return IN_PROD;
     }
 
-    public static void setVerbose(boolean verbose1) {
-        verbose = verbose1;
+    public static void setInProd(boolean inProd) {
+        IN_PROD = inProd;
+    }
+
+    public static boolean isVerbose() {
+        return VERBOSE;
+    }
+
+    public static void setVerbose(boolean verbose) {
+        VERBOSE = verbose;
     }
 }
