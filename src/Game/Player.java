@@ -82,6 +82,14 @@ public class Player {
         this.color = color;
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
     public int getCellsRemaining() {
         return cellsRemaining;
     }
@@ -90,20 +98,12 @@ public class Player {
         this.cellsRemaining = cellsRemaining;
     }
 
-    public boolean isFirstPlayer() {
-        return firstPlayer;
-    }
-
     public Algorithm getAlgorithm() {
         return algorithm;
     }
 
-    public int getTurnNumber() {
-        return turnNumber;
-    }
-
-    public void setTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
+    public boolean isFirstPlayer() {
+        return firstPlayer;
     }
 
     public void setRandomAlgorithm(Tray tray, Client client) {

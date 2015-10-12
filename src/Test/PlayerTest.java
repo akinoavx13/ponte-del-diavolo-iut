@@ -4,6 +4,7 @@ import Algorithms.Random;
 import Constant.ColorConstants;
 import Constant.GameConstants;
 import Game.Player;
+import Game.Tray;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -68,4 +69,21 @@ public class PlayerTest {
         player.setTurnNumber(1);
         assertTrue(player.getTurnNumber() == 1);
     }
+
+    @Test
+    public void testSetCellsRemaining() {
+        Tray tray = new Tray(5);
+        Random random = new Random(tray, null, player);
+
+        player.setCellsRemaining(0);
+        assertTrue(player.getCellsRemaining() == 0);
+        assertTrue(!random.canISet2Cells());
+    }
+
+    @Test
+    public void testGetCellsRemaining() {
+        player.setCellsRemaining(10);
+        assertTrue(player.getCellsRemaining() == 10);
+    }
+
 }
