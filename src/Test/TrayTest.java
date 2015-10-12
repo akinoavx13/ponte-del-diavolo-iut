@@ -13,15 +13,13 @@ import static org.junit.Assert.assertTrue;
  */
 public class TrayTest {
 
-    private Tray tray;
-
     public TrayTest() {
         GameConstants.setVerbose(false);
-        this.tray = new Tray(10);
     }
 
     @Test
     public void constructorTest() {
+        Tray tray = new Tray(10);
         assertTrue(tray.getDimension() == 10);
         assertTrue(tray.getMatrice().length == 10);
         assertTrue(tray.getMatrice()[1].length == 10);
@@ -29,6 +27,7 @@ public class TrayTest {
 
     @Test
     public void testSetClearCell() throws Exception {
+        Tray tray = new Tray(10);
         tray.setClearCell(1, 3);
         assertTrue(tray.getCellIn(1, 3).getColor() == ColorConstants.CLEAR);
         assertTrue(tray.getCellIn(1, 3).getX() == 1);
@@ -37,6 +36,7 @@ public class TrayTest {
 
     @Test
     public void testSetDarkCell() throws Exception {
+        Tray tray = new Tray(10);
         tray.setDarkCell(3, 1);
         assertTrue(tray.getCellIn(3, 1).getColor() == ColorConstants.DARK);
         assertTrue(tray.getCellIn(3, 1).getX() == 3);
@@ -45,21 +45,25 @@ public class TrayTest {
 
     @Test
     public void testGetDimension() throws Exception {
+        Tray tray = new Tray(10);
         assertTrue(tray.getDimension() == 10);
     }
 
     @Test
     public void testGetMatrice() throws Exception {
+        Tray tray = new Tray(10);
         assertTrue(tray.getMatrice() instanceof Cell[][]);
     }
 
     @Test
     public void testGetCellIn() throws Exception {
+        Tray tray = new Tray(10);
         assertTrue(tray.getCellIn(1, 3) instanceof Cell);
     }
 
     @Test
     public void testIsFree() throws Exception {
+        Tray tray = new Tray(10);
         assertTrue(tray.isFree(4, 4));
     }
 }

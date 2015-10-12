@@ -14,43 +14,47 @@ import static org.junit.Assert.assertTrue;
  */
 public class PlayerTest {
 
-    private Player player;
-
     public PlayerTest() {
         GameConstants.setVerbose(false);
-
-        player = new Player(true);
     }
 
     @Test
     public void testConstructor() {
+        Player player = new Player(true);
         assertTrue(player.isFirstPlayer());
     }
 
     @Test
     public void testGetColor() throws Exception {
+        Player player = new Player(true);
+
         assertTrue(player.getColor() == ColorConstants.CLEAR);
     }
 
     @Test
     public void testIsFirstPlayer() throws Exception {
+        Player player = new Player(true);
+
         assertTrue(player.isFirstPlayer());
     }
 
     @Test
     public void testGetAlgorithm() throws Exception {
+        Player player = new Player(true);
         player.setRandomAlgorithm(null, null);
         assertTrue(player.getAlgorithm() instanceof Random);
     }
 
     @Test
     public void testGetTurnNumber() throws Exception {
+        Player player = new Player(true);
         player.setTurnNumber(1);
         assertTrue(player.getTurnNumber() == 1);
     }
 
     @Test
     public void testSetColor() throws Exception {
+        Player player = new Player(true);
         player.setColor(ColorConstants.DARK);
         assertTrue(player.getColor() == ColorConstants.DARK);
 
@@ -60,18 +64,21 @@ public class PlayerTest {
 
     @Test
     public void testSetRandomAlgorithm() throws Exception {
+        Player player = new Player(true);
         player.setRandomAlgorithm(null, null);
         assertTrue(player.getAlgorithm() instanceof Random);
     }
 
     @Test
     public void testSetTurnNumber() throws Exception {
+        Player player = new Player(true);
         player.setTurnNumber(1);
         assertTrue(player.getTurnNumber() == 1);
     }
 
     @Test
     public void testSetCellsRemaining() {
+        Player player = new Player(true);
         Tray tray = new Tray(5);
         Random random = new Random(tray, null, player);
 
@@ -82,6 +89,7 @@ public class PlayerTest {
 
     @Test
     public void testGetCellsRemaining() {
+        Player player = new Player(true);
         player.setCellsRemaining(10);
         assertTrue(player.getCellsRemaining() == 10);
     }
