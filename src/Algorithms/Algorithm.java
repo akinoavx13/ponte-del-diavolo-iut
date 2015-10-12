@@ -88,6 +88,7 @@ public abstract class Algorithm {
     }
 
     public void send2BestCells() {
+        player.setCellsRemaining(player.getCellsRemaining() - 2);
         client.sendCellPos(bestX1, bestY1, bestX2, bestY2);
     }
 

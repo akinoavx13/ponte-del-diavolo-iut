@@ -111,6 +111,6 @@ public class Random extends Algorithm {
                 }
             }
         }
-        return numberCellFree >= 2;
+        return numberCellFree >= 2 && player.getCellsRemaining() >= 2;
     }
 }
