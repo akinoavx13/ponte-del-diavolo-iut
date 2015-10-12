@@ -2,6 +2,7 @@ package Test;
 
 import Algorithms.Random;
 import Constant.GameConstants;
+import Game.Player;
 import Game.Tray;
 import org.junit.Test;
 
@@ -19,7 +20,9 @@ public class RandomTest {
     @Test
     public void testCanISet2Cells() throws Exception {
         Tray tray = new Tray(2);
-        Random random = new Random(tray, null, null);
+        Player player = new Player(true);
+
+        Random random = new Random(tray, null, player);
         tray.setClearCell(0, 0);
         tray.setClearCell(0, 1);
         assertTrue(random.canISet2Cells());

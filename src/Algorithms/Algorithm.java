@@ -27,8 +27,13 @@ public abstract class Algorithm {
     }
 
     /**********
-     *METHODS*
+     * METHODS*
      **********/
+
+    public int calculateScoreForOnePlayer(String color) {
+        int score = 0;
+        return score;
+    }
 
     public int countIslandIsolated(String color) {
         int numberIslandIsolated = 0;
@@ -105,7 +110,7 @@ public abstract class Algorithm {
     }
 
     /*******************
-     *ABSTRACT METHODES*
+     * ABSTRACT METHODES*
      *******************/
 
     public abstract void init2Cells();
@@ -117,7 +122,7 @@ public abstract class Algorithm {
     public abstract boolean canISet2Cells();
 
     /*********
-     *SETTERS*
+     * SETTERS*
      *********/
 
     protected void setBestCell1(int x, int y) {
