@@ -141,6 +141,14 @@ public class Tray {
         return result;
     }
 
+    public double distanceBetween2Cells(Cell cellA, Cell cellB) {
+
+        int xb_xa = cellB.getX() - cellA.getX();
+        int yb_ya = cellB.getY() - cellA.getY();
+
+        return Math.sqrt(Math.pow(xb_xa, 2) + Math.pow(yb_ya, 2));
+    }
+
     /*********
      * GETTERS*
      *********/

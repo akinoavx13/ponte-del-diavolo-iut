@@ -122,6 +122,53 @@ public abstract class Algorithm {
         return result;
     }
 
+    public boolean canSetOneBridge(Cell cellA, Cell cellB) {
+        boolean result = false;
+
+        if (cellA.getColor() == cellB.getColor()) {
+            if (!cellA.isBridge() && !cellB.isBridge()) {
+                double distanceBetwwenAandB = tray.distanceBetween2Cells(cellA, cellB);
+
+                int xa = cellA.getX();
+                int xb = cellB.getX();
+
+                int ya = cellA.getY();
+                int yb = cellB.getY();
+
+                if (distanceBetwwenAandB <= 2 * Math.sqrt(2) && distanceBetwwenAandB > Math.sqrt(2)) {
+
+                    int deltaX = xb - xa;
+                    int deltaY = yb - ya;
+
+                    double absDXDY = Math.abs(deltaX) + Math.abs(deltaY);
+
+                    if (absDXDY == 2) {
+
+                        int x = xa + deltaX / 2;
+                        int y = ya + deltaY / 2;
+                        result = !tray.getCellIn(x, y).isBlocked();
+
+                    } else if (absDXDY == 3) {
+
+                        int x1 = (xa + xb) / 2;
+                        int y1 = (ya + yb) / 2;
+
+                        int x2 = xa + deltaX / 2;
+                        int y2 = ya + deltaY / 2;
+                        result = !tray.getCellIn(x1, y1).isBlocked() && !tray.getCellIn(x2, y2).isBlocked();
+
+                    } else if (absDXDY == 4) {
+                        int x = (xa + xb) / 2;
+                        int y = (ya + yb) / 2;
+                        result = !tray.getCellIn(x, y).isBlocked();
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     /*******************
      * ABSTRACT METHODES*
      *******************/
