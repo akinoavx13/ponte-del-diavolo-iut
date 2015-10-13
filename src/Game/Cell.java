@@ -41,6 +41,10 @@ public class Cell {
         this.color = color;
     }
 
+    public Bridge getBridge() {
+        return bridge;
+    }
+
     public boolean isBlocked() {
         return blocked;
     }

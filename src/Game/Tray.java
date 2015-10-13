@@ -134,7 +134,12 @@ public class Tray {
 
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                result += "[" + matrice[j][i].getColor() + "]";
+                result += "[" + matrice[j][i].getColor();
+                if (matrice[j][i].isBridge()) {
+                    result += " | pont]";
+                } else {
+                    result += "]";
+                }
             }
             result += "\n";
         }
@@ -232,10 +237,44 @@ public class Tray {
         }
     }
 
-    public void setBridgeIn(Cell cellStart, Cell cellEnd) {
+    public void setBridgeIn(Cell cellA, Cell cellB) {
         if (GameConstants.isVerbose()) {
-            System.err.println("Pont posée en [" + cellStart.getX() + "][" + cellStart.getY() + "] et [" + cellEnd.getX() + "][" + cellEnd.getX() + "]");
+            System.err.println("Pont posée en [" + cellA.getX() + "][" + cellA.getY() + "] et [" + cellB.getX() + "][" + cellB.getX() + "]");
         }
-        new Bridge(cellStart, cellEnd);
+
+        int xa = cellA.getX();
+        int xb = cellB.getX();
+
+        int ya = cellA.getY();
+        int yb = cellB.getY();
+
+        int deltaX = xb - xa;
+        int deltaY = yb - ya;
+
+        double absDXDY = Math.abs(deltaX) + Math.abs(deltaY);
+
+        if (absDXDY == 2) {
+
+            int x = xa + deltaX / 2;
+            int y = ya + deltaY / 2;
+            getCellIn(x, y).setBlocked(true);
+
+        } else if (absDXDY == 3) {
+
+            int x1 = (xa + xb) / 2;
+            int y1 = (ya + yb) / 2;
+
+            int x2 = xa + deltaX / 2;
+            int y2 = ya + deltaY / 2;
+            getCellIn(x1, y1).setBlocked(true);
+            getCellIn(x2, y2).setBlocked(true);
+
+        } else if (absDXDY == 4) {
+            int x = (xa + xb) / 2;
+            int y = (ya + yb) / 2;
+            getCellIn(x, y).setBlocked(true);
+        }
+
+        new Bridge(cellA, cellB);
     }
 }

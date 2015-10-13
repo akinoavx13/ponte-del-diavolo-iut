@@ -16,4 +16,12 @@ public class Bridge {
         this.cellEnd.setBridge(this);
     }
 
+    public Cell getCellStart() {
+        return cellStart;
+    }
+
+    public Cell getCellEnd() {
+        return cellEnd;
+    }
+
 }

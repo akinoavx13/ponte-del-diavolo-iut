@@ -35,7 +35,6 @@ public abstract class Algorithm {
 
     public int countIslandIsolated(String color) {
         int numberIslandIsolated = 0;
-        Cell[][] matrice = tray.getMatrice();
 
         //init the matrice, cells are not visited
         tray.setMatriceUnvisited();
@@ -71,16 +70,6 @@ public abstract class Algorithm {
         }
     }
 
-    public void set2BestCells() {
-        if (player.getColor() == ColorConstants.CLEAR) {
-            tray.setClearCell(bestX1, bestY1);
-            tray.setClearCell(bestX2, bestY2);
-        } else if (player.getColor() == ColorConstants.DARK) {
-            tray.setDarkCell(bestX1, bestY1);
-            tray.setDarkCell(bestX2, bestY2);
-        }
-    }
-
     public void sendWantToStopGame() {
         client.sendMessage("a");
     }
@@ -94,7 +83,7 @@ public abstract class Algorithm {
 
         tray.setMatriceUnvisited();
 
-        if (tray.isFree(x, y)) {
+        if (tray.isFree(x, y) && !tray.getCellIn(x, y).isBlocked()) {
             if (color == ColorConstants.CLEAR) {
                 tray.setClearCell(x, y);
             } else if (color == ColorConstants.DARK) {
@@ -125,7 +114,7 @@ public abstract class Algorithm {
     public boolean canSetOneBridge(Cell cellA, Cell cellB) {
         boolean result = false;
 
-        if (cellA.getColor() == cellB.getColor()) {
+        if (tray.getBridgeNumber() > 0 && cellA.getColor() == cellB.getColor()) {
             if (!cellA.isBridge() && !cellB.isBridge()) {
                 double distanceBetwwenAandB = tray.distanceBetween2Cells(cellA, cellB);
 
@@ -180,6 +169,8 @@ public abstract class Algorithm {
     public abstract void chooseOneColor();
 
     public abstract boolean searchBestCell(boolean forCell1);
+
+    public abstract boolean searchBestBridge();
 
 
     /*********

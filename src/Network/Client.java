@@ -5,6 +5,7 @@ import Constant.GameConstants;
 import Constant.NetworkConstants;
 import Game.Player;
 import Game.Tray;
+import IHM.Window;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ public class Client {
     private Player player;
     private Tray tray;
     private Scanner scanner;
+    private Window window;
 
     public Client(String addressServer, int port, int dimension) {
         this.addressServer = addressServer;
@@ -33,6 +35,7 @@ public class Client {
 
         if (!GameConstants.IN_PROD) {
             scanner = new Scanner(System.in);
+            this.window = new Window(tray);
         }
 
     }
@@ -209,12 +212,19 @@ public class Client {
 
                     } else if (message.charAt(i) == '-') {
                         System.out.println("L'autre joueur a posé un pont sur la case : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");
+                        tray.setBridgeIn(tray.getCellIn(columnCell1, rowCell1), tray.getCellIn(columnCell2, rowCell2));
+                        tray.setBridgeNumber(tray.getBridgeNumber() - 1);
+
+                        if (player.getTurnNumber() == 1) {
+                            player.initSecondPlayer();
+                        } else if (player.getTurnNumber() > 1) {
+                            player.play();
+                        }
                     }
                 }
             }
 
             System.out.println("A vous de jouer !");
-
             message = receiveMessage();
         }
     }

@@ -47,7 +47,6 @@ public class Random extends Algorithm {
     @Override
     public void searchBest2Cells() {
         if (canSetTwoCells()) {
-
             boolean bestCell1Found = searchBestCell(true);
             if (bestCell1Found) {
                 setBestCell1();
@@ -62,8 +61,8 @@ public class Random extends Algorithm {
             } else {
                 sendWantToStopGame();
             }
-
         } else {
+
             sendWantToStopGame();
         }
     }
@@ -128,6 +127,11 @@ public class Random extends Algorithm {
     @Override
     public boolean canSetTwoCells() {
         return tray.getNumberCellFree() >= 2 && player.getCellsRemaining() >= 2;
+    }
+
+    @Override
+    public boolean searchBestBridge() {
+        return false;
     }
 
 }

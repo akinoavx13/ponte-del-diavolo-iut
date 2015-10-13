@@ -158,6 +158,53 @@ public class AlgorithmTest {
         assertTrue(random3.canSetOneBridge(tray3.getCellIn(2, 2), tray3.getCellIn(0, 1)));
         assertTrue(random3.canSetOneBridge(tray3.getCellIn(2, 2), tray3.getCellIn(1, 0)));
 
+        Tray tray4 = new Tray(5);
+
+        tray4.setClearCell(0, 2);
+        tray4.setClearCell(1, 1);
+        tray4.setClearCell(1, 3);
+        tray4.setClearCell(2, 2);
+
+        Random random4 = new Random(tray4, null, null);
+
+        assertTrue(random4.canSetOneBridge(tray4.getCellIn(0, 2), tray4.getCellIn(2, 2)));
+
+        tray4.setBridgeIn(tray4.getCellIn(0, 2), tray4.getCellIn(2, 2));
+
+        assertTrue(!random4.canSetOneBridge(tray4.getCellIn(1, 1), tray4.getCellIn(1, 3)));
+
+
+        Tray tray5 = new Tray(5);
+
+        tray5.setClearCell(2, 2);
+        tray5.setClearCell(0, 3);
+        tray5.setClearCell(2, 3);
+        tray5.setClearCell(0, 4);
+
+        Random random5 = new Random(tray5, null, null);
+
+        assertTrue(random5.canSetOneBridge(tray5.getCellIn(0, 4), tray5.getCellIn(2, 2)));
+
+        tray5.setBridgeIn(tray5.getCellIn(0, 4), tray5.getCellIn(2, 2));
+
+        assertTrue(!random5.canSetOneBridge(tray5.getCellIn(0, 3), tray5.getCellIn(2, 3)));
+
+
+        Tray tray6 = new Tray(5);
+
+        tray6.setClearCell(0, 3);
+        tray6.setClearCell(2, 3);
+        tray6.setClearCell(0, 4);
+        tray6.setClearCell(2, 4);
+
+        Random random6 = new Random(tray6, null, null);
+
+        assertTrue(random6.canSetOneBridge(tray6.getCellIn(0, 4), tray6.getCellIn(2, 3)));
+
+        tray6.setBridgeIn(tray6.getCellIn(0, 4), tray6.getCellIn(2, 3));
+
+        assertTrue(!random6.canSetOneBridge(tray6.getCellIn(0, 3), tray6.getCellIn(2, 4)));
+
     }
 
 }
