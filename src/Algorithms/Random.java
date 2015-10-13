@@ -80,7 +80,7 @@ public class Random extends Algorithm {
             x = (int) (Math.random() * tray.getDimension());
             y = (int) (Math.random() * tray.getDimension());
         }
-        result = canSetOneCell(x, y, player.getColor());
+        result = tray.canSetOneCell(x, y, player.getColor());
 
         if (!result && testNumber <= tray.getNumberCellFree() / 2) {
             x = (int) (Math.random() * tray.getDimension());
@@ -89,7 +89,7 @@ public class Random extends Algorithm {
                 x = (int) (Math.random() * tray.getDimension());
                 y = (int) (Math.random() * tray.getDimension());
             }
-            result = canSetOneCell(x, y, player.getColor());
+            result = tray.canSetOneCell(x, y, player.getColor());
 
             testNumber++;
         } else if (result) {
@@ -117,16 +117,6 @@ public class Random extends Algorithm {
             player.setColor(ColorConstants.DARK);
         }
         sendPlayerColor();
-    }
-
-    /**
-     * check if there are 2 places to set cells
-     *
-     * @return
-     */
-    @Override
-    public boolean canSetTwoCells() {
-        return tray.getNumberCellFree() >= 2 && player.getCellsRemaining() >= 2;
     }
 
     @Override

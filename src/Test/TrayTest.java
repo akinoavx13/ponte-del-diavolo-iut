@@ -143,7 +143,7 @@ public class TrayTest {
     }
 
     @Test
-    public void testCellInDiagNotVisited() {
+    public void testCellInDiagNotVisited1() {
         Tray tray = new Tray(4);
 
         tray.setClearCell(0, 0);
@@ -151,17 +151,20 @@ public class TrayTest {
 
         tray.setClearCell(1, 1);
         assertTrue(tray.cellInDiagNotVisited(1, 1, ColorConstants.CLEAR));
+    }
 
-        Tray tray2 = new Tray(4);
+    @Test
+    public void testCellInDiagNotVisited2() {
+        Tray tray = new Tray(4);
 
-        tray2.setClearCell(0, 1);
+        tray.setClearCell(0, 1);
 
-        tray2.setClearCell(1, 2);
-        tray2.setClearCell(2, 2);
-        tray2.setClearCell(3, 2);
-        tray2.setClearCell(2, 3);
+        tray.setClearCell(1, 2);
+        tray.setClearCell(2, 2);
+        tray.setClearCell(3, 2);
+        tray.setClearCell(2, 3);
 
-        ArrayList<Cell> cells = tray2.totalCellsAdjacent(2, 2, ColorConstants.CLEAR);
+        ArrayList<Cell> cells = tray.totalCellsAdjacent(2, 2, ColorConstants.CLEAR);
 
         assertTrue(cells.size() == 4);
 
@@ -177,11 +180,11 @@ public class TrayTest {
         assertTrue(cells.get(3).getX() == 3);
         assertTrue(cells.get(3).getY() == 2);
 
-        assertTrue(tray2.cellInDiagNotVisited(cells.get(2).getX(), cells.get(2).getY(), ColorConstants.CLEAR));
+        assertTrue(tray.cellInDiagNotVisited(cells.get(2).getX(), cells.get(2).getY(), ColorConstants.CLEAR));
 
-        assertTrue(!tray2.cellInDiagNotVisited(cells.get(0).getX(), cells.get(0).getY(), ColorConstants.CLEAR));
-        assertTrue(!tray2.cellInDiagNotVisited(cells.get(1).getX(), cells.get(1).getY(), ColorConstants.CLEAR));
-        assertTrue(!tray2.cellInDiagNotVisited(cells.get(3).getX(), cells.get(3).getY(), ColorConstants.CLEAR));
+        assertTrue(!tray.cellInDiagNotVisited(cells.get(0).getX(), cells.get(0).getY(), ColorConstants.CLEAR));
+        assertTrue(!tray.cellInDiagNotVisited(cells.get(1).getX(), cells.get(1).getY(), ColorConstants.CLEAR));
+        assertTrue(!tray.cellInDiagNotVisited(cells.get(3).getX(), cells.get(3).getY(), ColorConstants.CLEAR));
 
     }
 
@@ -199,6 +202,192 @@ public class TrayTest {
 
         assertTrue(tray.islandInDiagNotVisited(2, 2, ColorConstants.CLEAR));
         assertTrue(!tray.islandInDiagNotVisited(3, 3, ColorConstants.CLEAR));
+    }
+
+    @Test
+    public void testCountIslandIsolated() throws Exception {
+        Tray tray = new Tray(5);
+        tray.setClearCell(0, 0);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(2, 0);
+
+        tray.setClearCell(1, 2);
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(0, 4);
+        tray.setClearCell(1, 4);
+
+        tray.setClearCell(3, 3);
+        tray.setClearCell(4, 2);
+        tray.setClearCell(4, 3);
+        tray.setClearCell(4, 4);
+
+        assertTrue(tray.countIslandIsolated(ColorConstants.CLEAR) == 2);
+    }
+
+    @Test
+    public void testCanSetOneCell() {
+        Tray tray = new Tray(4);
+
+        tray.setClearCell(0, 0);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+        tray.setClearCell(1, 1);
+
+        assertTrue(!tray.canSetOneCell(2, 2, ColorConstants.CLEAR));
+        assertTrue(tray.canSetOneCell(2, 3, ColorConstants.CLEAR));
+
+        Tray tray2 = new Tray(4);
+
+        tray2.setClearCell(0, 1);
+
+        tray2.setClearCell(1, 2);
+        tray2.setClearCell(3, 2);
+        tray2.setClearCell(2, 3);
+
+        assertTrue(!tray.canSetOneCell(2, 2, ColorConstants.CLEAR));
+
+    }
+
+    @Test
+    public void testCanSetOneBridge1() {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(2, 0);
+        tray.setClearCell(0, 2);
+        tray.setClearCell(4, 2);
+        tray.setClearCell(2, 4);
+
+        tray.setClearCell(3, 3);
+        tray.setClearCell(2, 3);
+        tray.setClearCell(1, 3);
+        tray.setClearCell(1, 2);
+        tray.setClearCell(1, 1);
+        tray.setClearCell(2, 1);
+        tray.setClearCell(3, 1);
+        tray.setClearCell(3, 2);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(2, 0)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(4, 2)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(2, 4)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 2)));
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(3, 3)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(2, 3)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(1, 3)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(1, 2)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(1, 1)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(2, 1)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(3, 1)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(3, 2)));
+    }
+
+    @Test
+    public void testCanSetOneBridge2() {
+        Tray tray = new Tray(8);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(0, 0);
+        tray.setClearCell(4, 0);
+        tray.setClearCell(4, 4);
+        tray.setClearCell(0, 4);
+
+        tray.setClearCell(7, 0);
+        tray.setClearCell(7, 7);
+        tray.setClearCell(0, 7);
+        tray.setClearCell(5, 2);
+        tray.setClearCell(2, 5);
+
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 0)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(4, 0)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(4, 4)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 4)));
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(7, 0)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(7, 7)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 7)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(5, 2)));
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(2, 5)));
+    }
+
+    @Test
+    public void testCanSetOntBridge3() {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(3, 0);
+        tray.setClearCell(4, 1);
+        tray.setClearCell(4, 3);
+        tray.setClearCell(3, 4);
+        tray.setClearCell(1, 4);
+        tray.setClearCell(0, 3);
+        tray.setClearCell(0, 1);
+        tray.setClearCell(1, 0);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(3, 0)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(4, 1)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(4, 3)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(3, 4)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(1, 4)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 3)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 1)));
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(1, 0)));
+    }
+
+    @Test
+    public void testCanSetOntBridge4() {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(0, 2);
+        tray.setClearCell(1, 1);
+        tray.setClearCell(1, 3);
+        tray.setClearCell(2, 2);
+
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 2), tray.getCellIn(2, 2)));
+
+        tray.setBridgeIn(tray.getCellIn(0, 2), tray.getCellIn(2, 2));
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(1, 1), tray.getCellIn(1, 3)));
+    }
+
+    @Test
+    public void testCanSetOntBridge5() {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(0, 3);
+        tray.setClearCell(2, 3);
+        tray.setClearCell(0, 4);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 4), tray.getCellIn(2, 2)));
+
+        tray.setBridgeIn(tray.getCellIn(0, 4), tray.getCellIn(2, 2));
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(0, 3), tray.getCellIn(2, 3)));
+    }
+
+    @Test
+    public void testCanSetOneBridge6() {
+        Tray tray = new Tray(5);
+
+        tray.setClearCell(0, 3);
+        tray.setClearCell(2, 3);
+        tray.setClearCell(0, 4);
+        tray.setClearCell(2, 4);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 4), tray.getCellIn(2, 3)));
+
+        tray.setBridgeIn(tray.getCellIn(0, 4), tray.getCellIn(2, 3));
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(0, 3), tray.getCellIn(2, 4)));
+
     }
 
 }

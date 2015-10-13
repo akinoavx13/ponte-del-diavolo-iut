@@ -3,12 +3,9 @@ package Algorithms;
 import Constant.ColorConstants;
 import Constant.GameConstants;
 import Constant.NetworkConstants;
-import Game.Cell;
 import Game.Player;
 import Game.Tray;
 import Network.Client;
-
-import java.util.ArrayList;
 
 /**
  * Created by Maxime on 10/10/2015.
@@ -32,25 +29,6 @@ public abstract class Algorithm {
     /**********
      * METHODS*
      **********/
-
-    public int countIslandIsolated(String color) {
-        int numberIslandIsolated = 0;
-
-        //init the matrice, cells are not visited
-        tray.setMatriceUnvisited();
-
-        for (int i = 0; i < tray.getDimension(); i++) {
-            for (int j = 0; j < tray.getDimension(); j++) {
-
-                //count if there are 4 cells adjacent.
-                if (tray.totalCellsAdjacent(i, j, color).size() == 4) {
-                    numberIslandIsolated++;
-                }
-            }
-        }
-
-        return numberIslandIsolated;
-    }
 
     public void send2BestCells() {
         player.setCellsRemaining(player.getCellsRemaining() - 2);
@@ -76,86 +54,6 @@ public abstract class Algorithm {
 
     public boolean canSetTwoCells() {
         return tray.getNumberCellFree() >= 2 && player.getCellsRemaining() >= 2;
-    }
-
-    public boolean canSetOneCell(int x, int y, String color) {
-        boolean result = false;
-
-        tray.setMatriceUnvisited();
-
-        if (tray.isFree(x, y) && !tray.getCellIn(x, y).isBlocked()) {
-            if (color == ColorConstants.CLEAR) {
-                tray.setClearCell(x, y);
-            } else if (color == ColorConstants.DARK) {
-                tray.setDarkCell(x, y);
-            }
-
-            ArrayList<Cell> totalAdjacent = tray.totalCellsAdjacent(x, y, color);
-
-            if (totalAdjacent.size() < 4) {
-                if (!tray.islandInDiagNotVisited(x, y, color)) {
-                    result = true;
-                }
-            } else if (totalAdjacent.size() == 4) {
-                result = true;
-                for (Cell cell : totalAdjacent) {
-                    if (tray.cellInDiagNotVisited(cell.getX(), cell.getY(), color)) {
-                        result = false;
-                    }
-                }
-            }
-        }
-
-        tray.setCellToFree(x, y);
-
-        return result;
-    }
-
-    public boolean canSetOneBridge(Cell cellA, Cell cellB) {
-        boolean result = false;
-
-        if (tray.getBridgeNumber() > 0 && cellA.getColor() == cellB.getColor()) {
-            if (!cellA.isBridge() && !cellB.isBridge()) {
-                double distanceBetwwenAandB = tray.distanceBetween2Cells(cellA, cellB);
-
-                int xa = cellA.getX();
-                int xb = cellB.getX();
-
-                int ya = cellA.getY();
-                int yb = cellB.getY();
-
-                if (distanceBetwwenAandB <= 2 * Math.sqrt(2) && distanceBetwwenAandB > Math.sqrt(2)) {
-
-                    int deltaX = xb - xa;
-                    int deltaY = yb - ya;
-
-                    double absDXDY = Math.abs(deltaX) + Math.abs(deltaY);
-
-                    if (absDXDY == 2) {
-
-                        int x = xa + deltaX / 2;
-                        int y = ya + deltaY / 2;
-                        result = !tray.getCellIn(x, y).isBlocked();
-
-                    } else if (absDXDY == 3) {
-
-                        int x1 = (xa + xb) / 2;
-                        int y1 = (ya + yb) / 2;
-
-                        int x2 = xa + deltaX / 2;
-                        int y2 = ya + deltaY / 2;
-                        result = !tray.getCellIn(x1, y1).isBlocked() && !tray.getCellIn(x2, y2).isBlocked();
-
-                    } else if (absDXDY == 4) {
-                        int x = (xa + xb) / 2;
-                        int y = (ya + yb) / 2;
-                        result = !tray.getCellIn(x, y).isBlocked();
-                    }
-                }
-            }
-        }
-
-        return result;
     }
 
     /*******************

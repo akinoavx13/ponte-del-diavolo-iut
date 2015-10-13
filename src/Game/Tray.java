@@ -128,6 +128,105 @@ public class Tray {
         return totalAdjacent;
     }
 
+    public boolean canSetOneBridge(Cell cellA, Cell cellB) {
+        boolean result = false;
+
+        if (getBridgeNumber() > 0 && cellA.getColor() == cellB.getColor()) {
+            if (!cellA.isBridge() && !cellB.isBridge()) {
+                double distanceBetwwenAandB = distanceBetween2Cells(cellA, cellB);
+
+                int xa = cellA.getX();
+                int xb = cellB.getX();
+
+                int ya = cellA.getY();
+                int yb = cellB.getY();
+
+                if (distanceBetwwenAandB <= 2 * Math.sqrt(2) && distanceBetwwenAandB > Math.sqrt(2)) {
+
+                    int deltaX = xb - xa;
+                    int deltaY = yb - ya;
+
+                    double absDXDY = Math.abs(deltaX) + Math.abs(deltaY);
+
+                    if (absDXDY == 2) {
+
+                        int x = xa + deltaX / 2;
+                        int y = ya + deltaY / 2;
+                        result = !getCellIn(x, y).isBlocked();
+
+                    } else if (absDXDY == 3) {
+
+                        int x1 = (xa + xb) / 2;
+                        int y1 = (ya + yb) / 2;
+
+                        int x2 = xa + deltaX / 2;
+                        int y2 = ya + deltaY / 2;
+                        result = !getCellIn(x1, y1).isBlocked() && !getCellIn(x2, y2).isBlocked();
+
+                    } else if (absDXDY == 4) {
+                        int x = (xa + xb) / 2;
+                        int y = (ya + yb) / 2;
+                        result = !getCellIn(x, y).isBlocked();
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public boolean canSetOneCell(int x, int y, String color) {
+        boolean result = false;
+
+        setMatriceUnvisited();
+
+        if (isFree(x, y) && !getCellIn(x, y).isBlocked()) {
+            if (color == ColorConstants.CLEAR) {
+                setClearCell(x, y);
+            } else if (color == ColorConstants.DARK) {
+                setDarkCell(x, y);
+            }
+
+            ArrayList<Cell> totalAdjacent = totalCellsAdjacent(x, y, color);
+
+            if (totalAdjacent.size() < 4) {
+                if (!islandInDiagNotVisited(x, y, color)) {
+                    result = true;
+                }
+            } else if (totalAdjacent.size() == 4) {
+                result = true;
+                for (Cell cell : totalAdjacent) {
+                    if (cellInDiagNotVisited(cell.getX(), cell.getY(), color)) {
+                        result = false;
+                    }
+                }
+            }
+        }
+
+        setCellToFree(x, y);
+
+        return result;
+    }
+
+    public int countIslandIsolated(String color) {
+        int numberIslandIsolated = 0;
+
+        //init the matrice, cells are not visited
+        setMatriceUnvisited();
+
+        for (int i = 0; i < getDimension(); i++) {
+            for (int j = 0; j < getDimension(); j++) {
+
+                //count if there are 4 cells adjacent.
+                if (totalCellsAdjacent(i, j, color).size() == 4) {
+                    numberIslandIsolated++;
+                }
+            }
+        }
+
+        return numberIslandIsolated;
+    }
+
     @Override
     public String toString() {
         String result = "";
@@ -277,4 +376,5 @@ public class Tray {
 
         new Bridge(cellA, cellB);
     }
+
 }

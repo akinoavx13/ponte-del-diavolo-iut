@@ -75,4 +75,11 @@ public class CellTest {
         cell.setVisited(true);
         assertTrue(cell.isVisited());
     }
+
+    @Test
+    public void testIsBlocked() throws Exception {
+        Cell cell = new Cell(0, 0, ColorConstants.DARK);
+        cell.setBlocked(true);
+        assertTrue(cell.isBlocked());
+    }
 }
