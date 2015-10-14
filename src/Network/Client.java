@@ -77,7 +77,6 @@ public class Client {
             }
         } else {
             result = scanner.nextLine().charAt(0);
-            System.out.println("resul : " + (char) result);
         }
         return result;
     }
