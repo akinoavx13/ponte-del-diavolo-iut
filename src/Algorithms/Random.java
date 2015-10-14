@@ -47,6 +47,7 @@ public class Random extends Algorithm {
     @Override
     public void searchBest2Cells() {
         if (canSetTwoCells()) {
+            tray.setMatriceNotTested();
             boolean bestCell1Found = searchBestCell(true);
             if (bestCell1Found) {
                 setBestCell1();
@@ -69,36 +70,27 @@ public class Random extends Algorithm {
 
     @Override
     public boolean searchBestCell(boolean forCell1) {
-        boolean result;
 
-        int testNumber = 1;
+        boolean result = false;
 
-        int x = (int) (Math.random() * tray.getDimension());
-        int y = (int) (Math.random() * tray.getDimension());
-
-        while (!tray.isFree(x, y)) {
-            x = (int) (Math.random() * tray.getDimension());
-            y = (int) (Math.random() * tray.getDimension());
-        }
-        result = tray.canSetOneCell(x, y, player.getColor());
-
-        if (!result && testNumber <= tray.getNumberCellFree() / 2) {
-            x = (int) (Math.random() * tray.getDimension());
-            y = (int) (Math.random() * tray.getDimension());
-            while (!tray.isFree(x, y)) {
-                x = (int) (Math.random() * tray.getDimension());
-                y = (int) (Math.random() * tray.getDimension());
-            }
-            result = tray.canSetOneCell(x, y, player.getColor());
-
-            testNumber++;
-        } else if (result) {
-            if (forCell1) {
-                bestX1 = x;
-                bestY1 = y;
-            } else {
-                bestX2 = x;
-                bestY2 = y;
+        for (int y = 0; y < tray.getDimension(); y++) {
+            for (int x = 0; x < tray.getDimension(); x++) {
+                if (tray.isFree(x, y) && !tray.getCellIn(x, y).isTested()) {
+                    if (tray.canSetOneCell(x, y, player.getColor())) {
+                        if (forCell1) {
+                            bestX1 = x;
+                            bestY1 = y;
+                        } else {
+                            bestX2 = x;
+                            bestY2 = y;
+                        }
+                        return true;
+                    } else {
+                        tray.getCellIn(x, y).setTested(true);
+                    }
+                } else {
+                    tray.getCellIn(x, y).setTested(true);
+                }
             }
         }
 

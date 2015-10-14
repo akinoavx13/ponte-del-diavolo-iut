@@ -22,6 +22,18 @@ public class TrayIHM extends JPanel {
         int offsetA = 800 / tray.getDimension();
         graphics.setColor(Color.black);
 
+        graphics.drawString("Ponts : ", 850, 50);
+        graphics.drawString(String.valueOf(tray.getBridgeNumber()), 930, 50);
+
+        graphics.drawString("Case vide : ", 850, 70);
+        graphics.drawString(String.valueOf(tray.getNumberCellFree()), 930, 70);
+
+        graphics.drawString("Case clair : ", 850, 90);
+        graphics.drawString(String.valueOf(tray.getNumberCellColor(ColorConstants.CLEAR)), 930, 90);
+
+        graphics.drawString("Case foncé : ", 850, 110);
+        graphics.drawString(String.valueOf(tray.getNumberCellColor(ColorConstants.DARK)), 930, 110);
+
         for (int x = 0; x <= tray.getDimension(); x++) {
             graphics.fillRect(x * offsetA, 0, 5, 800);
         }

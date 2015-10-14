@@ -231,10 +231,10 @@ public class Tray {
     public String toString() {
         String result = "";
 
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                result += "[" + matrice[j][i].getColor();
-                if (matrice[j][i].isBridge()) {
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
+                result += "[" + matrice[y][x].getColor();
+                if (matrice[y][x].isBridge()) {
                     result += " | pont]";
                 } else {
                     result += "]";
@@ -295,6 +295,20 @@ public class Tray {
         this.bridgeNumber = bridgeNumber;
     }
 
+    public int getNumberCellColor(String color) {
+        int numberCells = 0;
+
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
+                if (matrice[x][y].isThisColor(color)) {
+                    numberCells++;
+                }
+            }
+        }
+
+        return numberCells;
+    }
+
     /*********
      * SETTERS*
      *********/
@@ -323,7 +337,15 @@ public class Tray {
     public void setMatriceUnvisited() {
         for (int x = 0; x < dimension; x++) {
             for (int y = 0; y < dimension; y++) {
-                matrice[x][y].setVisited(false);
+                matrice[y][x].setVisited(false);
+            }
+        }
+    }
+
+    public void setMatriceNotTested() {
+        for (int x = 0; x < dimension; x++) {
+            for (int y = 0; y < dimension; y++) {
+                matrice[y][x].setTested(false);
             }
         }
     }

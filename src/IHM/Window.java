@@ -12,7 +12,7 @@ public class Window extends JFrame {
     private TrayIHM trayIHM;
 
     public Window(Tray tray) {
-        this.setSize(827, 827);
+        this.setSize(1000, 827);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

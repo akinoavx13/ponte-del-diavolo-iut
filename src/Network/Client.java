@@ -26,7 +26,6 @@ public class Client {
     private Player player;
     private Tray tray;
     private Scanner scanner;
-    private Window window;
 
     public Client(String addressServer, int port, int dimension) {
         this.addressServer = addressServer;
@@ -35,7 +34,7 @@ public class Client {
 
         if (!GameConstants.IN_PROD) {
             scanner = new Scanner(System.in);
-            this.window = new Window(tray);
+            new Window(tray);
         }
 
     }
