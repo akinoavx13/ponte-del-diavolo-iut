@@ -149,21 +149,24 @@ public class Client {
                     break;
                 case NetworkConstants.CLEAR_PLAYER:
                     if (GameConstants.isVerbose()) {
-                        System.out.println("Vous êtes le joueur clair !");
-                    }
-                    player.setColor(ColorConstants.CLEAR);
-                    break;
-                case NetworkConstants.DARK_PLAYER:
-                    if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le joueur foncé !");
                     }
                     player.setColor(ColorConstants.DARK);
+                    player.play();
+                    break;
+                case NetworkConstants.DARK_PLAYER:
+                    if (GameConstants.isVerbose()) {
+                        System.out.println("Vous êtes le joueur clair !");
+                    }
+                    player.setColor(ColorConstants.CLEAR);
                     break;
                 case NetworkConstants.PLAYER_STOP:
                     if (GameConstants.isVerbose()) {
                         System.out.println("L'autre joueur ne peut plus jouer !");
                     }
-                    player.play();
+                    if (player.getColor() == ColorConstants.DARK) {
+                        player.play();
+                    }
                     break;
                 case NetworkConstants.GAME_STOP:
                     if (GameConstants.isVerbose()) {

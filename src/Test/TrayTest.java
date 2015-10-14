@@ -415,6 +415,11 @@ public class TrayTest {
         tray.setClearCell(2, 4);
 
         assertTrue(!tray.canSetOneBridge(tray.getCellIn(0, 4), tray.getCellIn(2, 3)));
+
+        player.setColor(ColorConstants.CLEAR);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 4), tray.getCellIn(2, 3)));
+
     }
 
 }
