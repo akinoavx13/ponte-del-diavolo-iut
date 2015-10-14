@@ -42,9 +42,9 @@ public abstract class Algorithm {
 
     public void sendPlayerColor() {
         if (player.getColor() == ColorConstants.CLEAR) {
-            client.sendMessage(NetworkConstants.CLEAR_PLAYER);
+            client.sendMessage(Character.toString(NetworkConstants.CLEAR_PLAYER));
         } else {
-            client.sendMessage(NetworkConstants.DARK_PLAYER);
+            client.sendMessage(Character.toString(NetworkConstants.DARK_PLAYER));
         }
     }
 

@@ -67,21 +67,17 @@ public class Client {
         }
     }
 
-    public String receiveMessage() {
-        String result = "";
+    public int receiveMessage() {
+        int result = -1;
         if (GameConstants.IN_PROD) {
-            int receive;
             try {
-                receive = inputStream.read();
-                while (receive > 0 && receive <= 255) {
-                    result += (char) receive;
-                    receive = inputStream.read();
-                }
+                result = inputStream.read();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            result = scanner.nextLine();
+            result = scanner.nextLine().charAt(0);
+            System.out.println("resul : " + (char) result);
         }
         return result;
     }
@@ -116,23 +112,17 @@ public class Client {
         player.setTurnNumber(player.getTurnNumber() + 1);
     }
 
-    public boolean connectionNotClosed(String message) {
-        return message != "F";
-    }
-
     public void createPlayer(boolean isFirstPlayer) {
         player = new Player(isFirstPlayer);
         tray.setPlayer(player);
     }
 
     public void manageMessages() {
-        String message = receiveMessage();
-
-        while (connectionNotClosed(message)) {
+        int message;
+        while (true) {
+            message = receiveMessage();
             switch (message) {
-                case NetworkConstants.NULL:
-                    break;
-                case NetworkConstants.FIRST_PLAYER:
+                case (int) NetworkConstants.FIRST_PLAYER:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le premier joueur !");
                     }
@@ -140,27 +130,27 @@ public class Client {
                     player.setRandomAlgorithm(tray, this);
                     player.initFirstPlayer();
                     break;
-                case NetworkConstants.SECOND_PLAYER:
+                case (int) NetworkConstants.SECOND_PLAYER:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le deuxième joueur !");
                     }
                     createPlayer(false);
                     player.setRandomAlgorithm(tray, this);
                     break;
-                case NetworkConstants.CLEAR_PLAYER:
+                case (int) NetworkConstants.CLEAR_PLAYER:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le joueur foncé !");
                     }
                     player.setColor(ColorConstants.DARK);
                     player.play();
                     break;
-                case NetworkConstants.DARK_PLAYER:
+                case (int) NetworkConstants.DARK_PLAYER:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le joueur clair !");
                     }
                     player.setColor(ColorConstants.CLEAR);
                     break;
-                case NetworkConstants.PLAYER_STOP:
+                case (int) NetworkConstants.PLAYER_STOP:
                     if (GameConstants.isVerbose()) {
                         System.out.println("L'autre joueur ne peut plus jouer !");
                     }
@@ -168,68 +158,61 @@ public class Client {
                         player.play();
                     }
                     break;
-                case NetworkConstants.GAME_STOP:
+                case (int) NetworkConstants.GAME_STOP:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Fin de la partie");
                     }
                     closeConnectionToServer();
                     System.exit(0);
                     break;
-                case "matrice":
-                    System.out.println(tray);
-                    break;
-                case "tour":
-                    System.out.println("Tour n° " + player.getTurnNumber());
-                    break;
-                case "player":
-                    System.out.println(player);
-                    break;
             }
 
-            if (message.length() == 5) {
-
-                int rowCell1 = Integer.parseInt(String.valueOf(message.charAt(0)));
-                int columnCell1 = Integer.parseInt(String.valueOf(message.charAt(1)));
-
-                int rowCell2 = Integer.parseInt(String.valueOf(message.charAt(3)));
-                int columnCell2 = Integer.parseInt(String.valueOf(message.charAt(4)));
+            if (message >= 48 && message <= 57) {
 
                 System.out.print("Tour n° " + player.getTurnNumber() + "\t");
                 player.setTurnNumber(player.getTurnNumber() + 1);
-                for (int i = 0; i < message.length(); i++) {
-                    if (message.charAt(i) == '+') {
-                        System.out.println("L'autre joueur a joué 2 cases : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");
 
-                        if (player.getColor() == ColorConstants.CLEAR) {
-                            tray.setDarkCell(columnCell1, rowCell1);
-                            tray.setDarkCell(columnCell2, rowCell2);
-                        } else if (player.getColor() == ColorConstants.DARK) {
-                            tray.setClearCell(columnCell1, rowCell1);
-                            tray.setClearCell(columnCell2, rowCell2);
-                        }
+                int rowCell1 = Integer.parseInt(String.valueOf((char) message));
+                int columnCell1 = Integer.parseInt(String.valueOf((char) receiveMessage()));
 
-                        if (player.getTurnNumber() == 1) {
-                            player.initSecondPlayer();
-                        } else if (player.getTurnNumber() > 1) {
-                            player.play();
-                        }
+                int operator = receiveMessage();
 
-                    } else if (message.charAt(i) == '-') {
-                        System.out.println("L'autre joueur a posé un pont sur la case : [" + message.charAt(0) + "][" + message.charAt(1) + "] et [" + message.charAt(3) + "][" + message.charAt(4) + "]");
-                        tray.setBridgeIn(tray.getCellIn(columnCell1, rowCell1), tray.getCellIn(columnCell2, rowCell2));
-                        tray.setBridgeNumber(tray.getBridgeNumber() - 1);
+                if (operator == (int) '+') {
+                    int rowCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
+                    int columnCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
 
-                        if (player.getTurnNumber() == 1) {
-                            player.initSecondPlayer();
-                        } else if (player.getTurnNumber() > 1) {
-                            player.play();
-                        }
+                    System.out.println("L'autre joueur a joué 2 cases : [" + rowCell1 + "][" + columnCell1 + "] et [" + rowCell2 + "][" + columnCell2 + "]");
+
+                    if (player.getColor() == ColorConstants.CLEAR) {
+                        tray.setDarkCell(columnCell1, rowCell1);
+                        tray.setDarkCell(columnCell2, rowCell2);
+                    } else if (player.getColor() == ColorConstants.DARK) {
+                        tray.setClearCell(columnCell1, rowCell1);
+                        tray.setClearCell(columnCell2, rowCell2);
+                    }
+
+                    if (player.getTurnNumber() == 1) {
+                        player.initSecondPlayer();
+                    } else if (player.getTurnNumber() > 1) {
+                        player.play();
+                    }
+
+                } else if (operator == (int) '-') {
+
+                    int rowCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
+                    int columnCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
+
+                    System.out.println("L'autre joueur a posé un pont sur la case : [" + rowCell1 + "][" + columnCell1 + "] et [" + rowCell2 + "][" + columnCell2 + "]");
+                    tray.setBridgeIn(tray.getCellIn(columnCell1, rowCell1), tray.getCellIn(columnCell2, rowCell2));
+                    tray.setBridgeNumber(tray.getBridgeNumber() - 1);
+
+                    if (player.getTurnNumber() == 1) {
+                        player.initSecondPlayer();
+                    } else if (player.getTurnNumber() > 1) {
+                        player.play();
                     }
                 }
             }
-
-            System.out.println("A vous de jouer !");
-            message = receiveMessage();
         }
     }
 }

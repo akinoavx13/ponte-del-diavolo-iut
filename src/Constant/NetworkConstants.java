@@ -5,13 +5,13 @@ package Constant;
  */
 public class NetworkConstants {
 
-    public static final String FIRST_PLAYER = "P";
-    public static final String SECOND_PLAYER = "S";
-    public static final String CLEAR_PLAYER = "c";
-    public static final String DARK_PLAYER = "f";
-    public static final String PLAYER_STOP = "a";
-    public static final String GAME_STOP = "F";
-    public static final String NULL = "";
+    public static final char FIRST_PLAYER = 'P';
+    public static final char SECOND_PLAYER = 'S';
+    public static final char CLEAR_PLAYER = 'c';
+    public static final char DARK_PLAYER = 'f';
+    public static final char PLAYER_STOP = 'a';
+    public static final char GAME_STOP = 'F';
+
 
     public static final int TIME_LIMIT = 9500;
 
