@@ -162,6 +162,7 @@ public class Client {
                     if (GameConstants.isVerbose()) {
                         System.out.println("L'autre joueur ne peut plus jouer !");
                     }
+                    player.play();
                     break;
                 case NetworkConstants.GAME_STOP:
                     if (GameConstants.isVerbose()) {
