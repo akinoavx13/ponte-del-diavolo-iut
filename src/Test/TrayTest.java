@@ -3,6 +3,7 @@ package Test;
 import Constant.ColorConstants;
 import Constant.GameConstants;
 import Game.Cell;
+import Game.Player;
 import Game.Tray;
 import org.junit.Test;
 
@@ -253,6 +254,8 @@ public class TrayTest {
     @Test
     public void testCanSetOneBridge1() {
         Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(2, 2);
 
@@ -288,6 +291,8 @@ public class TrayTest {
     @Test
     public void testCanSetOneBridge2() {
         Tray tray = new Tray(8);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(2, 2);
 
@@ -318,6 +323,8 @@ public class TrayTest {
     @Test
     public void testCanSetOntBridge3() {
         Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(2, 2);
 
@@ -343,6 +350,8 @@ public class TrayTest {
     @Test
     public void testCanSetOntBridge4() {
         Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(0, 2);
         tray.setClearCell(1, 1);
@@ -360,6 +369,8 @@ public class TrayTest {
     @Test
     public void testCanSetOntBridge5() {
         Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(2, 2);
         tray.setClearCell(0, 3);
@@ -376,6 +387,8 @@ public class TrayTest {
     @Test
     public void testCanSetOneBridge6() {
         Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
 
         tray.setClearCell(0, 3);
         tray.setClearCell(2, 3);
@@ -388,6 +401,20 @@ public class TrayTest {
 
         assertTrue(!tray.canSetOneBridge(tray.getCellIn(0, 3), tray.getCellIn(2, 4)));
 
+    }
+
+    @Test
+    public void testCanSetOneBridge7() {
+        Tray tray = new Tray(5);
+        Player player = new Player(false);
+        tray.setPlayer(player);
+
+        tray.setClearCell(0, 3);
+        tray.setClearCell(2, 3);
+        tray.setClearCell(0, 4);
+        tray.setClearCell(2, 4);
+
+        assertTrue(!tray.canSetOneBridge(tray.getCellIn(0, 4), tray.getCellIn(2, 3)));
     }
 
 }

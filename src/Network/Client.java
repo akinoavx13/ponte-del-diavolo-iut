@@ -122,6 +122,7 @@ public class Client {
 
     public void createPlayer(boolean isFirstPlayer) {
         player = new Player(isFirstPlayer);
+        tray.setPlayer(player);
     }
 
     public void manageMessages() {

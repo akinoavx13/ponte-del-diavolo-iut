@@ -15,6 +15,8 @@ public class Tray {
     private int dimension;
     private int bridgeNumber;
 
+    private Player player;
+
     public Tray(int dimension) {
         this.dimension = dimension;
         matrice = new Cell[dimension][dimension];
@@ -131,7 +133,7 @@ public class Tray {
     public boolean canSetOneBridge(Cell cellA, Cell cellB) {
         boolean result = false;
 
-        if (getBridgeNumber() > 0 && cellA.getColor() == cellB.getColor()) {
+        if (getBridgeNumber() > 0 && player.getColor() == cellA.getColor() && player.getColor() == cellB.getColor()) {
             if (!cellA.isBridge() && !cellB.isBridge()) {
                 double distanceBetwwenAandB = distanceBetween2Cells(cellA, cellB);
 
@@ -399,4 +401,7 @@ public class Tray {
         new Bridge(cellA, cellB);
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
