@@ -422,4 +422,58 @@ public class TrayTest {
 
     }
 
+    @Test
+    public void testCanSetOneBridge8() {
+        Tray tray = new Tray(4);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(0, 3);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(2, 2), tray.getCellIn(0, 3)));
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 3));
+
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+
+    }
+
+    @Test
+    public void testCanSetOneBridge9() {
+        Tray tray = new Tray(4);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(0, 3);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 3), tray.getCellIn(2, 2)));
+
+        tray.setBridgeIn(tray.getCellIn(0, 3), tray.getCellIn(2, 2));
+
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+
+    }
+
+    @Test
+    public void testCanSetOneBridge10() {
+        Tray tray = new Tray(4);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(0, 2);
+        tray.setClearCell(2, 3);
+
+        assertTrue(tray.canSetOneBridge(tray.getCellIn(0, 2), tray.getCellIn(2, 3)));
+
+        tray.setBridgeIn(tray.getCellIn(0, 2), tray.getCellIn(2, 3));
+
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+
+    }
+
 }

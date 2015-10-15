@@ -18,8 +18,6 @@ public class Player {
 
     private int turnNumber;
 
-    private int cellsRemaining;
-
     public Player(boolean firstPlayer) {
         turnNumber = 0;
         this.firstPlayer = firstPlayer;
@@ -28,7 +26,6 @@ public class Player {
         } else {
             color = ColorConstants.DARK;
         }
-        cellsRemaining = 40;
     }
 
     /*********
@@ -88,14 +85,6 @@ public class Player {
 
     public void setTurnNumber(int turnNumber) {
         this.turnNumber = turnNumber;
-    }
-
-    public int getCellsRemaining() {
-        return cellsRemaining;
-    }
-
-    public void setCellsRemaining(int cellsRemaining) {
-        this.cellsRemaining = cellsRemaining;
     }
 
     public Algorithm getAlgorithm() {

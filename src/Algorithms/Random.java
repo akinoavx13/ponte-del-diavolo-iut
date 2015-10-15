@@ -21,8 +21,14 @@ public class Random extends Algorithm {
     public void init2Cells() {
         int x1 = (int) (Math.random() * tray.getDimension());
         int y1 = (int) (Math.random() * tray.getDimension());
+
         int x2 = (int) (Math.random() * tray.getDimension());
         int y2 = (int) (Math.random() * tray.getDimension());
+
+        while (x1 == x2 && y1 == y2) {
+            x2 = (int) (Math.random() * tray.getDimension());
+            y2 = (int) (Math.random() * tray.getDimension());
+        }
 
         if (player.getColor() == ColorConstants.CLEAR) {
             tray.setClearCell(x1, y1);
@@ -75,7 +81,7 @@ public class Random extends Algorithm {
 
         for (int y = 0; y < tray.getDimension(); y++) {
             for (int x = 0; x < tray.getDimension(); x++) {
-                if (tray.isFree(x, y) && !tray.getCellIn(x, y).isTested()) {
+                if (tray.isFree(x, y)) {
                     if (tray.canSetOneCell(x, y, player.getColor())) {
                         if (forCell1) {
                             bestX1 = x;
@@ -85,11 +91,7 @@ public class Random extends Algorithm {
                             bestY2 = y;
                         }
                         return true;
-                    } else {
-                        tray.getCellIn(x, y).setTested(true);
                     }
-                } else {
-                    tray.getCellIn(x, y).setTested(true);
                 }
             }
         }

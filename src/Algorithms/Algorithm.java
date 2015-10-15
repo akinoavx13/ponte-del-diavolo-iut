@@ -31,7 +31,6 @@ public abstract class Algorithm {
      **********/
 
     public void send2BestCells() {
-        player.setCellsRemaining(player.getCellsRemaining() - 2);
         client.sendCellPos(bestX1, bestY1, bestX2, bestY2);
     }
 
@@ -53,7 +52,7 @@ public abstract class Algorithm {
     }
 
     public boolean canSetTwoCells() {
-        return tray.getNumberCellFree() >= 2 && player.getCellsRemaining() >= 2;
+        return tray.getNumberCellFree() >= 2;
     }
 
     /*******************
