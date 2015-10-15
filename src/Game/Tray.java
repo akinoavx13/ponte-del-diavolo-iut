@@ -390,11 +390,6 @@ public class Tray {
             int x2 = xa + deltaX / 2;
             int y2 = ya + deltaY / 2;
 
-            System.out.println("x1 : " + x1);
-            System.out.println("y1 : " + y1);
-            System.out.println("x2 : " + x2);
-            System.out.println("y2 : " + y2);
-
             getCellIn(x1, y1).setBlocked(true);
             getCellIn(x2, y2).setBlocked(true);
 
