@@ -476,4 +476,211 @@ public class TrayTest {
 
     }
 
+    @Test
+    public void testSetBridgeIn1() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(2, 0);
+        tray.setClearCell(4, 2);
+        tray.setClearCell(2, 4);
+        tray.setClearCell(0, 2);
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(2, 0));
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(4, 2));
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(2, 4));
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 2));
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+
+    }
+
+    @Test
+    public void testSetBridgeIn2() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(0, 0);
+        tray.setClearCell(4, 0);
+        tray.setClearCell(4, 4);
+        tray.setClearCell(0, 4);
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(4, 0));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(4, 4));
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 4));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 0));
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+
+    }
+
+    @Test
+    public void testSetBridgeIn3() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(1, 0);
+        tray.setClearCell(3, 0);
+        tray.setClearCell(4, 1);
+        tray.setClearCell(4, 3);
+        tray.setClearCell(3, 4);
+        tray.setClearCell(1, 4);
+        tray.setClearCell(0, 3);
+        tray.setClearCell(0, 1);
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(1, 0));
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(3, 0));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(4, 1));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(4, 3));
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(3, 4));
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(1, 4));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 3));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 2), tray.getCellIn(0, 1));
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+
+    }
+
+    @Test
+    public void testSetBridgeIn4() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(2, 0);
+        tray.setClearCell(4, 2);
+        tray.setClearCell(2, 4);
+        tray.setClearCell(0, 2);
+
+        tray.setBridgeIn(tray.getCellIn(2, 0), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(4, 2), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(2, 4), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(0, 2), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+
+    }
+
+    @Test
+    public void testSetBridgeIn5() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+        tray.setClearCell(0, 0);
+        tray.setClearCell(4, 0);
+        tray.setClearCell(4, 4);
+        tray.setClearCell(0, 4);
+
+        tray.setBridgeIn(tray.getCellIn(4, 0), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(4, 4), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(0, 4), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(0, 0), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+
+    }
+
+    @Test
+    public void testSetBridgeIn6() {
+        Tray tray = new Tray(5);
+        Player player = new Player(true);
+        tray.setPlayer(player);
+
+        tray.setClearCell(2, 2);
+
+        tray.setClearCell(1, 0);
+        tray.setClearCell(3, 0);
+        tray.setClearCell(4, 1);
+        tray.setClearCell(4, 3);
+        tray.setClearCell(3, 4);
+        tray.setClearCell(1, 4);
+        tray.setClearCell(0, 3);
+        tray.setClearCell(0, 1);
+
+        tray.setBridgeIn(tray.getCellIn(1, 0), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(3, 0), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+        assertTrue(tray.getCellIn(2, 1).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(4, 1), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 1).isBlocked());
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(4, 3), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 2).isBlocked());
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(3, 4), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(3, 3).isBlocked());
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(1, 4), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+        assertTrue(tray.getCellIn(2, 3).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(0, 3), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 3).isBlocked());
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+
+        tray.setBridgeIn(tray.getCellIn(0, 1), tray.getCellIn(2, 2));
+        assertTrue(tray.getCellIn(1, 2).isBlocked());
+        assertTrue(tray.getCellIn(1, 1).isBlocked());
+
+    }
+
 }

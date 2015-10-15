@@ -61,7 +61,18 @@ public class TrayIHM extends JPanel {
                     int yB = tray.getCellIn(x, y).getBridge().getCellEnd().getY();
 
                     graphics.drawLine(xA * offsetA, yA * offsetA, xB * offsetA, yB * offsetA);
-
+                }
+                if (tray.getCellIn(x, y).isBlocked()) {
+                    graphics.setColor(Color.YELLOW);
+                    graphics.fillRect(x * offsetA + 10, y * offsetA + 10, offsetA - 15, offsetA - 15);
+                }
+                if (tray.getCellIn(x, y).isTested()) {
+                    graphics.setColor(Color.GREEN);
+                    graphics.fillRect(x * offsetA + 10, y * offsetA + 10, offsetA - 15, offsetA - 15);
+                }
+                if (tray.getCellIn(x, y).isVisited()) {
+                    graphics.setColor(Color.GRAY);
+                    graphics.fillRect(x * offsetA + 10, y * offsetA + 10, offsetA - 15, offsetA - 15);
                 }
             }
         }

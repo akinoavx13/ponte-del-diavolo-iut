@@ -53,7 +53,6 @@ public class Random extends Algorithm {
     @Override
     public void searchBest2Cells() {
         if (canSetTwoCells()) {
-            tray.setMatriceNotTested();
             boolean bestCell1Found = searchBestCell(true);
             if (bestCell1Found) {
                 setBestCell1();

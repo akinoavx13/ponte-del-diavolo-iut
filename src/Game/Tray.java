@@ -157,14 +157,21 @@ public class Tray {
                         result = !getCellIn(x, y).isBlocked();
 
                     } else if (absDXDY == 3) {
+                        if (Math.abs(deltaX) == 1) {
+                            int x1 = xa;
+                            int y1 = ya + deltaY / 2;
 
-                        int x1 = (xa + xb) / 2;
-                        int y1 = (ya + yb) / 2;
+                            int x2 = xa + deltaX / Math.abs(deltaX);
+                            int y2 = ya + deltaY / 2;
+                            result = !getCellIn(x1, y1).isBlocked() && !getCellIn(x2, y2).isBlocked();
+                        } else {
+                            int x1 = xa + deltaX / 2;
+                            int y1 = ya;
 
-                        int x2 = xa + deltaX / 2;
-                        int y2 = ya + deltaY / 2;
-                        result = !getCellIn(x1, y1).isBlocked() && !getCellIn(x2, y2).isBlocked();
-
+                            int x2 = xa + deltaX / 2;
+                            int y2 = ya + deltaY / Math.abs(deltaY);
+                            result = !getCellIn(x1, y1).isBlocked() && !getCellIn(x2, y2).isBlocked();
+                        }
                     } else if (absDXDY == 4) {
                         int x = (xa + xb) / 2;
                         int y = (ya + yb) / 2;
@@ -233,8 +240,8 @@ public class Tray {
     public String toString() {
         String result = "";
 
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
                 result += "[" + matrice[y][x].getColor();
                 if (matrice[y][x].isBridge()) {
                     result += " | pont]";
@@ -278,9 +285,9 @@ public class Tray {
     public int getNumberCellFree() {
         int numberCellFree = 0;
 
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
-                if (matrice[x][y].isThisColor(ColorConstants.FREE)) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (matrice[y][x].isThisColor(ColorConstants.FREE)) {
                     numberCellFree++;
                 }
             }
@@ -300,9 +307,9 @@ public class Tray {
     public int getNumberCellColor(String color) {
         int numberCells = 0;
 
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
-                if (matrice[x][y].isThisColor(color)) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (matrice[y][x].isThisColor(color)) {
                     numberCells++;
                 }
             }
@@ -337,24 +344,24 @@ public class Tray {
     }
 
     public void setMatriceUnvisited() {
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
                 matrice[y][x].setVisited(false);
             }
         }
     }
 
     public void setMatriceNotTested() {
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
                 matrice[y][x].setTested(false);
             }
         }
     }
 
     public void setMatriceToFree() {
-        for (int x = 0; x < dimension; x++) {
-            for (int y = 0; y < dimension; y++) {
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
                 setCellToFree(x, y);
             }
         }
@@ -384,14 +391,23 @@ public class Tray {
 
         } else if (absDXDY == 3) {
 
-            int x1 = (xa + xb) / 2;
-            int y1 = (ya + yb) / 2;
+            if (Math.abs(deltaX) == 1) {
+                int x1 = xa;
+                int y1 = ya + deltaY / 2;
 
-            int x2 = xa + deltaX / 2;
-            int y2 = ya + deltaY / 2;
+                int x2 = xa + deltaX / Math.abs(deltaX);
+                int y2 = ya + deltaY / 2;
+                getCellIn(x1, y1).setBlocked(true);
+                getCellIn(x2, y2).setBlocked(true);
+            } else {
+                int x1 = xa + deltaX / 2;
+                int y1 = ya;
 
-            getCellIn(x1, y1).setBlocked(true);
-            getCellIn(x2, y2).setBlocked(true);
+                int x2 = xa + deltaX / 2;
+                int y2 = ya + deltaY / Math.abs(deltaY);
+                getCellIn(x1, y1).setBlocked(true);
+                getCellIn(x2, y2).setBlocked(true);
+            }
 
         } else if (absDXDY == 4) {
             int x = (xa + xb) / 2;
