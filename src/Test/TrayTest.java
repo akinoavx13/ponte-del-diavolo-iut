@@ -683,4 +683,48 @@ public class TrayTest {
 
     }
 
+    @Test
+    public void testProblem10Sec() {
+        Tray tray = new Tray(10);
+        Player player = new Player(false);
+        player.setRandomAlgorithm(tray, null);
+        tray.setPlayer(player);
+
+        tray.setClearCell(8, 7);
+        tray.setClearCell(6, 9);
+
+        player.setColor(ColorConstants.DARK);
+
+        tray.setDarkCell(0, 0);
+        tray.setDarkCell(1, 0);
+
+        tray.canSetOneBridge(tray.getCellIn(8, 7), tray.getCellIn(6, 9));
+
+        tray.setDarkCell(2, 0);
+        tray.setDarkCell(3, 0);
+
+        tray.setClearCell(4, 5);
+        tray.setClearCell(7, 7);
+
+        tray.setDarkCell(5, 0);
+        tray.setDarkCell(6, 0);
+
+        tray.setClearCell(2, 7);
+        tray.setClearCell(9, 7);
+
+        tray.setDarkCell(7, 0);
+        tray.setDarkCell(8, 0);
+
+        tray.setClearCell(6, 4);
+        tray.setClearCell(6, 7);
+
+        tray.setDarkCell(0, 2);
+        tray.setDarkCell(1, 2);
+
+        tray.setBridgeIn(tray.getCellIn(4, 5), tray.getCellIn(7, 6));
+
+        player.play();
+
+    }
+
 }

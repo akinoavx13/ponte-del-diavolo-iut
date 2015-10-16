@@ -2,6 +2,7 @@ package Network;
 
 import Constant.ColorConstants;
 import Constant.GameConstants;
+import Constant.Log;
 import Constant.NetworkConstants;
 import Game.Player;
 import Game.Tray;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -36,10 +38,10 @@ public class Client {
             scanner = new Scanner(System.in);
             new Window(tray);
         }
-
     }
 
     public void connectionToServer() {
+        Log.writeLog(new Date().toString() + " : début de la connexion avec le serveur");
         if (GameConstants.IN_PROD) {
             try {
                 socket = new Socket(addressServer, port);
@@ -53,6 +55,7 @@ public class Client {
     }
 
     public void closeConnectionToServer() {
+        Log.writeLog(new Date().toString() + " : fin de la connexion avec le serveur");
         if (GameConstants.IN_PROD) {
             try {
                 inputStream.close();
@@ -102,6 +105,7 @@ public class Client {
         message += String.valueOf(y1) + String.valueOf(x1) + "+" + String.valueOf(y2) + String.valueOf(x2);
         sendMessage(message);
         player.setTurnNumber(player.getTurnNumber() + 1);
+        Log.writeLog(new Date().toString() + " : message envoyé au serveur : \"" + message + "\"");
     }
 
     public void sendBridgePos(int x1, int y1, int x2, int y2) {
@@ -109,6 +113,7 @@ public class Client {
         message += String.valueOf(y1) + String.valueOf(x1) + "-" + String.valueOf(y2) + String.valueOf(x2);
         sendMessage(message);
         player.setTurnNumber(player.getTurnNumber() + 1);
+        Log.writeLog(new Date().toString() + " : message envoyé au serveur : \"" + message + "\"");
     }
 
     public void createPlayer(boolean isFirstPlayer) {
@@ -128,6 +133,7 @@ public class Client {
                     createPlayer(true);
                     player.setRandomAlgorithm(tray, this);
                     player.initFirstPlayer();
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     break;
                 case (int) NetworkConstants.SECOND_PLAYER:
                     if (GameConstants.isVerbose()) {
@@ -135,6 +141,7 @@ public class Client {
                     }
                     createPlayer(false);
                     player.setRandomAlgorithm(tray, this);
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     break;
                 case (int) NetworkConstants.CLEAR_PLAYER:
                     if (GameConstants.isVerbose()) {
@@ -142,12 +149,14 @@ public class Client {
                     }
                     player.setColor(ColorConstants.DARK);
                     player.play();
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     break;
                 case (int) NetworkConstants.DARK_PLAYER:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Vous êtes le joueur clair !");
                     }
                     player.setColor(ColorConstants.CLEAR);
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     break;
                 case (int) NetworkConstants.PLAYER_STOP:
                     if (GameConstants.isVerbose()) {
@@ -156,11 +165,13 @@ public class Client {
                     if (player.getColor() == ColorConstants.DARK) {
                         player.play();
                     }
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     break;
                 case (int) NetworkConstants.GAME_STOP:
                     if (GameConstants.isVerbose()) {
                         System.out.println("Fin de la partie");
                     }
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + (char) message + "\"");
                     closeConnectionToServer();
                     System.exit(0);
                     break;
@@ -181,6 +192,7 @@ public class Client {
                     int columnCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
 
                     System.out.println("L'autre joueur a joué 2 cases : [" + rowCell1 + "][" + columnCell1 + "] et [" + rowCell2 + "][" + columnCell2 + "]");
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + rowCell1 + columnCell1 + "+" + rowCell2 + columnCell2 + "\"");
 
                     if (player.getColor() == ColorConstants.CLEAR) {
                         tray.setDarkCell(columnCell1, rowCell1);
@@ -202,6 +214,7 @@ public class Client {
                     int columnCell2 = Integer.parseInt(String.valueOf((char) receiveMessage()));
 
                     System.out.println("L'autre joueur a posé un pont sur la case : [" + rowCell1 + "][" + columnCell1 + "] et [" + rowCell2 + "][" + columnCell2 + "]");
+                    Log.writeLog(new Date().toString() + " : message reçu du serveur : \"" + rowCell1 + columnCell1 + "-" + rowCell2 + columnCell2 + "\"");
                     tray.setBridgeIn(tray.getCellIn(columnCell1, rowCell1), tray.getCellIn(columnCell2, rowCell2));
                     tray.setBridgeNumber(tray.getBridgeNumber() - 1);
 

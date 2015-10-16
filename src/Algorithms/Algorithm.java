@@ -52,7 +52,8 @@ public abstract class Algorithm {
     }
 
     public boolean canSetTwoCells() {
-        return tray.getNumberCellFree() >= 2;
+        int numberCaseFree = tray.getNumberCellFree();
+        return numberCaseFree >= 2;
     }
 
     /*******************

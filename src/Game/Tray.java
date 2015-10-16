@@ -2,8 +2,10 @@ package Game;
 
 import Constant.ColorConstants;
 import Constant.GameConstants;
+import Constant.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Maxime on 10/10/2015.
@@ -35,6 +37,7 @@ public class Tray {
      *********/
 
     public boolean cellInDiagNotVisited(int x, int y, String color) {
+        Log.writeLog(new Date().toString() + " : DEBUT existe t-il une cellule non visitée en diagonale ? . FONCTION : cellInDiagNotVisited : CLASSE : Game/Tray");
         boolean result = false;
 
         //above left
@@ -56,11 +59,13 @@ public class Tray {
         else if (x - 1 >= 0 && y + 1 < dimension && !getCellIn(x - 1, y + 1).isVisited() && getCellIn(x - 1, y + 1).getColor() == color) {
             result = true;
         }
+        Log.writeLog(new Date().toString() + " : DEBUT existe t-il une cellule non visitée en diagonale ? . FONCTION : cellInDiagNotVisited : CLASSE : Game/Tray");
 
         return result;
     }
 
     public boolean islandInDiagNotVisited(int x, int y, String color) {
+        Log.writeLog(new Date().toString() + " : DEBUT existe t-il une île non visitée en diagonale ? . FONCTION : islandInDiagNotVisited : CLASSE : Game/Tray");
         boolean result = false;
 
         //above left
@@ -94,12 +99,14 @@ public class Tray {
                 result = true;
             }
         }
-
+        Log.writeLog(new Date().toString() + " : FIN existe t-il une île non visitée en diagonale ? . FONCTION : islandInDiagNotVisited : CLASSE : Game/Tray");
         return result;
     }
 
     public ArrayList<Cell> totalCellsAdjacent(int x, int y, String color) {
+        Log.writeLog(new Date().toString() + " : DEBUT calcul RECURSIF pour avoir le nombre d'îles . FONCTION : totalCellsAdjacent : CLASSE : Game/Tray");
         ArrayList<Cell> totalAdjacent = new ArrayList<>();
+
 
         //if there is a cell correspond to the right color
         // and if we didn't check it before
@@ -127,6 +134,7 @@ public class Tray {
                 totalAdjacent.addAll(totalCellsAdjacent(x + 1, y, color));
             }
         }
+        Log.writeLog(new Date().toString() + " : FIN calcul RECURSIF pour avoir le nombre d'îles . FONCTION : totalCellsAdjacent : CLASSE : Game/Tray");
         return totalAdjacent;
     }
 
@@ -185,6 +193,8 @@ public class Tray {
     }
 
     public boolean canSetOneCell(int x, int y, String color) {
+        Log.writeLog(new Date().toString() + " : DEBUT peut-on poser une cellule ? . FONCTION : canSetOneCell : CLASSE : Game/Tray");
+
         boolean result = false;
 
         setMatriceUnvisited();
@@ -213,6 +223,7 @@ public class Tray {
         }
 
         setCellToFree(x, y);
+        Log.writeLog(new Date().toString() + " : FIN peut-on poser une cellule ? . FONCTION : canSetOneCell : CLASSE : Game/Tray");
 
         return result;
     }
@@ -294,6 +305,34 @@ public class Tray {
         }
 
         return numberCellFree;
+    }
+
+    public int getNumberCellBlocked() {
+        int numberCellBlocked = 0;
+
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (matrice[y][x].isBlocked()) {
+                    numberCellBlocked++;
+                }
+            }
+        }
+
+        return numberCellBlocked;
+    }
+
+    public int getNumberCellTested() {
+        int numberCellTested = 0;
+
+        for (int y = 0; y < dimension; y++) {
+            for (int x = 0; x < dimension; x++) {
+                if (matrice[y][x].isTested()) {
+                    numberCellTested++;
+                }
+            }
+        }
+
+        return numberCellTested;
     }
 
     public int getBridgeNumber() {

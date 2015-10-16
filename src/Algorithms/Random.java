@@ -1,9 +1,12 @@
 package Algorithms;
 
 import Constant.ColorConstants;
+import Constant.Log;
 import Game.Player;
 import Game.Tray;
 import Network.Client;
+
+import java.util.Date;
 
 /**
  * Created by Maxime on 10/10/2015.
@@ -19,6 +22,9 @@ public class Random extends Algorithm {
      */
     @Override
     public void init2Cells() {
+
+        Log.writeLog(new Date().toString() + " : DEBUT d'initialisation des deux premières cellules, si on est le premier joueur. FONCTION : ini2Cells : CLASSE : Algorithms/Random");
+
         int x1 = (int) (Math.random() * tray.getDimension());
         int y1 = (int) (Math.random() * tray.getDimension());
 
@@ -43,6 +49,7 @@ public class Random extends Algorithm {
 
         bestX2 = x2;
         bestY2 = y2;
+        Log.writeLog(new Date().toString() + " : FIN d'initialisation des deux premières cellules, si on est le premier joueur. FONCTION : ini2Cells : CLASSE : Algorithms/Random");
 
         send2BestCells();
     }
@@ -52,6 +59,7 @@ public class Random extends Algorithm {
      */
     @Override
     public void searchBest2Cells() {
+        Log.writeLog(new Date().toString() + " : DEBUT de la recherche des 2 meilleurs cellules. FONCTION : searchBest2Cells : CLASSE : Algorithms/Random");
         if (canSetTwoCells()) {
             boolean bestCell1Found = searchBestCell(true);
             if (bestCell1Found) {
@@ -71,16 +79,18 @@ public class Random extends Algorithm {
 
             sendWantToStopGame();
         }
+        Log.writeLog(new Date().toString() + " : FIN de la recherche des 2 meilleurs cellules. FONCTION : searchBest2Cells : CLASSE : Algorithms/Random");
     }
 
     @Override
     public boolean searchBestCell(boolean forCell1) {
+        Log.writeLog(new Date().toString() + " : DEBUT cherche la meilleur cellule . FONCTION : searchBestCell : CLASSE : Algorithms/Algorithm");
 
         boolean result = false;
 
         for (int y = 0; y < tray.getDimension(); y++) {
             for (int x = 0; x < tray.getDimension(); x++) {
-                if (tray.isFree(x, y)) {
+                if (tray.isFree(x, y) && !tray.getCellIn(x, y).isTested()) {
                     if (tray.canSetOneCell(x, y, player.getColor())) {
                         if (forCell1) {
                             bestX1 = x;
@@ -91,9 +101,11 @@ public class Random extends Algorithm {
                         }
                         return true;
                     }
+                    tray.getCellIn(x, y).setTested(true);
                 }
             }
         }
+        Log.writeLog(new Date().toString() + " : DEBUT cherche la meilleur cellule . FONCTION : searchBestCell : CLASSE : Algorithms/Algorithm");
 
         return result;
     }

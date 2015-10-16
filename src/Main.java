@@ -1,5 +1,8 @@
 import Constant.GameConstants;
+import Constant.Log;
 import Network.Client;
+
+import java.util.Date;
 
 public class Main {
 
@@ -9,6 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
         init(args);
+
+        Log.clearLog();
+        Log.writeLog(new Date().toString() + " : PARAMETRES : adresse : " + addressServer + ", port : " + port + ", dimension : " + dimension + "\n");
 
         Client client = new Client(addressServer, port, dimension);
         client.connectionToServer();
