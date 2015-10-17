@@ -3,6 +3,7 @@ package Algorithms;
 import Constant.ColorConstants;
 import Constant.GameConstants;
 import Constant.NetworkConstants;
+import Game.Cell;
 import Game.Player;
 import Game.Tray;
 import Network.Client;
@@ -52,7 +53,17 @@ public abstract class Algorithm {
     }
 
     public boolean canSetTwoCells() {
-        int numberCaseFree = tray.getNumberCellFree();
+        int numberCaseFree = 0;
+
+        for (int y = 0; y < tray.getDimension(); y++) {
+            for (int x = 0; x < tray.getDimension(); x++) {
+                Cell cell = tray.getCellIn(x, y);
+                if (cell.isThisColor(ColorConstants.FREE) && !cell.isBlocked() && !cell.isTested()) {
+                    numberCaseFree++;
+                }
+            }
+        }
+
         return numberCaseFree >= 2;
     }
 

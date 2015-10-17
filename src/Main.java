@@ -43,7 +43,7 @@ public class Main {
 
             addressServer = "127.0.0.1";
             port = 8080;
-            dimension = 4;
+            dimension = 10;
         }
     }
 

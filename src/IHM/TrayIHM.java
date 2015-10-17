@@ -1,6 +1,7 @@
 package IHM;
 
 import Constant.ColorConstants;
+import Game.Cell;
 import Game.Tray;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class TrayIHM extends JPanel {
         int offsetA = 800 / tray.getDimension();
         graphics.setColor(Color.black);
 
+
         graphics.drawString("Ponts : ", 850, 50);
         graphics.drawString(String.valueOf(tray.getBridgeNumber()), 930, 50);
 
@@ -33,6 +35,21 @@ public class TrayIHM extends JPanel {
 
         graphics.drawString("Case foncé : ", 850, 110);
         graphics.drawString(String.valueOf(tray.getNumberCellColor(ColorConstants.DARK)), 930, 110);
+
+
+        int numberCaseFree = 0;
+
+        for (int y = 0; y < tray.getDimension(); y++) {
+            for (int x = 0; x < tray.getDimension(); x++) {
+                Cell cell = tray.getCellIn(x, y);
+                if (cell.isThisColor(ColorConstants.FREE) && !cell.isBlocked() && !cell.isTested()) {
+                    numberCaseFree++;
+                }
+            }
+        }
+
+        graphics.drawString("Case libre : ", 850, 130);
+        graphics.drawString(String.valueOf(numberCaseFree), 930, 130);
 
         for (int x = 0; x <= tray.getDimension(); x++) {
             graphics.fillRect(x * offsetA, 0, 5, 800);
@@ -68,11 +85,7 @@ public class TrayIHM extends JPanel {
                 }
                 if (tray.getCellIn(x, y).isTested()) {
                     graphics.setColor(Color.GREEN);
-                    graphics.fillRect(x * offsetA + 10, y * offsetA + 10, offsetA - 15, offsetA - 15);
-                }
-                if (tray.getCellIn(x, y).isVisited()) {
-                    graphics.setColor(Color.GRAY);
-                    graphics.fillRect(x * offsetA + 10, y * offsetA + 10, offsetA - 15, offsetA - 15);
+                    graphics.fillRect(x * offsetA + 20, y * offsetA + 20, offsetA - 25, offsetA - 25);
                 }
             }
         }

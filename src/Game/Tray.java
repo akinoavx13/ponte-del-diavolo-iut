@@ -199,7 +199,7 @@ public class Tray {
 
         setMatriceUnvisited();
 
-        if (isFree(x, y) && !getCellIn(x, y).isBlocked()) {
+        if (isFree(x, y) && !getCellIn(x, y).isBlocked() && !getCellIn(x, y).isTested()) {
             if (color == ColorConstants.CLEAR) {
                 setClearCell(x, y);
             } else if (color == ColorConstants.DARK) {
@@ -220,9 +220,10 @@ public class Tray {
                     }
                 }
             }
+            setCellToFree(x, y);
         }
+        getCellIn(x, y).setTested(true);
 
-        setCellToFree(x, y);
         Log.writeLog(new Date().toString() + " : FIN peut-on poser une cellule ? . FONCTION : canSetOneCell : CLASSE : Game/Tray");
 
         return result;
@@ -386,14 +387,6 @@ public class Tray {
         for (int y = 0; y < dimension; y++) {
             for (int x = 0; x < dimension; x++) {
                 matrice[y][x].setVisited(false);
-            }
-        }
-    }
-
-    public void setMatriceNotTested() {
-        for (int y = 0; y < dimension; y++) {
-            for (int x = 0; x < dimension; x++) {
-                matrice[y][x].setTested(false);
             }
         }
     }

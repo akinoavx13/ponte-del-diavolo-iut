@@ -90,7 +90,7 @@ public class Random extends Algorithm {
 
         for (int y = 0; y < tray.getDimension(); y++) {
             for (int x = 0; x < tray.getDimension(); x++) {
-                if (tray.isFree(x, y) && !tray.getCellIn(x, y).isTested()) {
+                if (tray.isFree(x, y) && !tray.getCellIn(x, y).isTested() && !tray.getCellIn(x, y).isBlocked()) {
                     if (tray.canSetOneCell(x, y, player.getColor())) {
                         if (forCell1) {
                             bestX1 = x;
@@ -101,11 +101,10 @@ public class Random extends Algorithm {
                         }
                         return true;
                     }
-                    tray.getCellIn(x, y).setTested(true);
                 }
             }
         }
-        Log.writeLog(new Date().toString() + " : DEBUT cherche la meilleur cellule . FONCTION : searchBestCell : CLASSE : Algorithms/Algorithm");
+        Log.writeLog(new Date().toString() + " : FIN cherche la meilleur cellule . FONCTION : searchBestCell : CLASSE : Algorithms/Algorithm");
 
         return result;
     }
